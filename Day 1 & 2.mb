@@ -1,0 +1,889 @@
+ANSP-M-007
+------------------------------------------------------------
+http://10.50.23.114:8000/ <-- ctfd server
+------------------------------------------------------------
+duckduckgo <-- input ip address and cidr
+------------------------------------------------------------
+Layer---PDU---Name
+7 Data      Application
+6 Data      Presentation
+5 Data      Session
+4 Segments  Transport
+3 Packets   Network (logical)
+2 Frames    Data Link (physical) 
+1 Bits      Physical
+------------------------------------------------------------
+#DAY 1#    will need to score 193/275 points to achieve a 70%.
+------------------------------------------------------------
+Networking standards play a crucial role in the realm of information technology, acting as the foundational framework that enables diverse devices and systems to communicate effectively within a network
+------------------------------------------------------------
+Application Layer: provides a network interface to the software applications that communicate over the network.
+    It supports communication services directly to end-users or applications and provides network services such as file transfers,email, and remote login.
+     -Remote Login: SSH (Secure Shell) and Telnet
+    -Web: HTTP (Hypertext Transfer Protocol) and HTTPs
+     -File Transfer: FTP (File Transfer Protocol), SFTP (SSH FTP), and FTPS (FTP Secure)
+    -Email: SMTP (Simple Mail Transfer Protocol), POP (Post Office Protocol), and IMAP (Internet Message Access Protocol)
+------------------------------------------------------------
+Presentation Layer: deals with the syntax and semantics of the information exchanged between systems. 
+  It translates data between the application layer and the lower layers, ensuring that the data is in a readable format.
+  Tasks include data compression, encryption, and character set conversions.
+  There are no protocols that operate at this layer. This layer deal more with encoding and file formatting.
+ -Character encodings
+ -Character encodings
+ -Compression
+ -Encryption
+------------------------------------------------------------
+Session Layer: establishes, manages, and terminates communication sessions between applications. It controls dialogues (full-duplex or half-duplex), maintains synchronization, and manages data exchange between applications.
+  Sometimes the protocols that operate at this layer act as a "shim protocol" between various communicating devices.
+    Protocols that operate at this layer:
+        NetBIOS (Network Basic Input/Output System)
+        RPC (Remote Procedure Call)
+        PPTP (Point-to-Point Tunneling Protocol)
+        SMB (Server Message Block) can operate like a "shim protocol" between various communicating devices.
+        SOCKS (Socket Secure)
+------------------------------------------------------------
+Transport Layer: ensures end-to-end communication, providing error detection, error correction, and flow control. It breaks down larger messages into smaller segments, sends them across the network, and reassembles them at the destination.
+    Protocols that operate at this layer:
+        -Transmission Control Protocol (TCP): TCP is a connection-oriented protocol that provides reliable and ordered delivery of data packets.
+        It establishes a virtual connection between the sender and receiver, manages packet acknowledgment, retransmission, and flow control to ensure data integrity and delivery.
+        TCP is widely used for applications that require error-free data transmission, such as web browsing, email, and file transfer.
+        -User Datagram Protocol (UDP): UDP is a connectionless protocol that provides fast, but unreliable, delivery of data packets.
+        Unlike TCP, UDP does not establish a connection or guarantee packet delivery, making it faster but less reliable.
+        It is commonly used for real-time communication applications like video streaming, online gaming, and Voice over IP (VoIP), where occasional packet loss is acceptable.
+------------------------------------------------------------
+Network Layer: is responsible for logical addressing, routing, and forwarding. It enables devices to communicate across different networks by determining the best path for data to travel from the source to the destination. 
+IP (Internet Protocol) and IPv6 operates at this layer.
+    Protocols that operate at this layer:
+        -Internet Protocol version 4 (IPv4): IPv4 is the most widely used version of the Internet Protocol.
+        It uses 32-bit addresses, allowing for approximately 4.3 billion unique addresses. However, due to the exhaustion of available IPv4 addresses, IPv6 has been developed as its successor.
+        -Internet Protocol version 6 (IPv6): IPv6 is designed to address the limitations of IPv4 by using a 128-bit address space, providing a vastly larger number of possible addresses.
+        It offers improved security, better support for mobile devices, and more efficient routing compared to IPv4.
+        -Internet Control Message Protocol (ICMP): ICMP is used for network diagnostics and error reporting.
+        It allows routers and hosts to communicate error messages, such as "destination unreachable" or "time exceeded," back to the source host.
+        -Internet Group Management Protocol (IGMP): IGMP is used by IPv4 systems to manage multicast group membership.
+        It enables hosts to inform routers about their desire to receive multicast traffic for specific multicast groups.
+        -Neighbor Discovery Protocol (NDP): NDP is used in IPv6 networks for address resolution, router discovery, and neighbor detection.
+        It replaces Address Resolution Protocol (ARP) in IPv4 networks.
+        -Open Shortest Path First (OSPF): OSPF is an interior gateway routing protocol used within autonomous systems.
+        It employs the shortest path first (SPF) algorithm to calculate the best route between routers, considering factors such as link cost and network congestion.
+        -Routing Information Protocol (RIP): RIP is another interior gateway routing protocol used within autonomous systems.
+        It uses the distance-vector routing algorithm and is simpler to configure compared to OSPF, although it may be less efficient in larger networks.
+------------------------------------------------------------
+Data-Link Layer: is responsible for creating a reliable link between two directly connected nodes. It handles issues such as framing, addressing, and error detection. It also manages access to the physical medium and controls how data is placed on the medium.
+    Protocols that operate at this layer:
+        -Ethernet: Ethernet is the most widely used data link layer protocol.
+        It defines standards for the physical and data link layers, including how data is framed for transmission over Ethernet networks and how devices on the same network share the communication medium.
+        Ethernet uses MAC (Media Access Control) addresses to identify devices on the network. 
+        -IEEE 802.11 (Wi-Fi): The IEEE 802.11 standard governs wireless local area network (WLAN) technologies, commonly known as Wi-Fi.
+        It defines how wireless devices communicate with each other over radio frequencies, including protocols for data framing, channel access, and security.
+        -Ethernet VLAN Tagging (IEEE 802.1Q): IEEE 802.1Q is a protocol used to implement virtual LANs (VLANs) on Ethernet networks.
+        It adds a VLAN tag to Ethernet frames, allowing devices to distinguish between different VLANs and route traffic accordingly.
+        -Address Resolution Protocol (ARP): ARP is used to map IP addresses to MAC addresses on a local network.
+        When a device needs to communicate with another device on the same network, it sends an ARP request to discover the MAC address associated with the IP address.
+        -Reverse Address Resolution Protocol (RARP): RARP performs the opposite function of ARP.
+        It maps MAC addresses to IP addresses, typically used by diskless workstations to obtain their IP addresses from a server based on their MAC addresses.
+        -Link Layer Discovery Protocol (LLDP): LLDP is a vendor-neutral protocol used to discover information about neighboring devices on a network.
+        It allows network devices to exchange information about their identity, capabilities, and status.
+        -Cisco Discovery Protocol (CDP): Similar to LLDP, CDP is a proprietary protocol developed by Cisco.
+        It enables Cisco devices to discover and share information about neighboring Cisco devices on a network, including device type, IP address, and software version.
+------------------------------------------------------------
+Physical Layer: deals with the physical connection between devices. It defines the hardware elements, such as cables, connectors, and the transmission medium (e.g., copper wires, fiber optics). 
+It is concerned with the raw transmission of bits over a physical medium. The protocols define the electrical, mechanical, and functional specifications for transmitting raw bit streams over physical mediums.
+    Protocols that operate at this layer:
+        -Ethernet Physical Layer Standards (IEEE 802.3): IEEE 802.3 standards define the physical and electrical characteristics of Ethernet networks. 
+        They specify parameters such as cable types (e.g., twisted pair, fiber optic), signaling methods (e.g., Manchester encoding, 4B5B encoding), and data transmission rates (e.g., 10 Mbps, 100 Mbps, 1 Gbps, 10 Gbps).
+        -IEEE 802.11 (Wi-Fi): Wi-Fi is a family of wireless networking standards for local area networks (LANs).
+        It defines physical layer specifications for radio frequency transmission over the air, including modulation techniques, channel widths, and data rates used in Wi-Fi networks.
+        -Bluetooth: Bluetooth is a wireless technology standard for short-range communication between devices. 
+        It defines physical layer specifications for radio frequency transmission, including frequency bands, modulation techniques, and power levels used in Bluetooth devices.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------
+        OSI Layer 1
+------------------------------------------------------------
+Base64 - usually has an = at the end
+https://net.cybbh.io/public/networking/latest/01_data/_images/base64table.png
+------------------------------------------------------------
+TOPOLOGIES
+-Bus
+A bus network is a network topology in which nodes are directly connected to a common half-duplex link called a bus.
+-Ring
+A ring network is a network topology in which each node connects to exactly two other nodes, forming a single continuous pathway for signals through each node – a ring. Data travels from node to node, with each node along the way handling every packet.
+-Mesh
+  A mesh network is a local network topology in which the infrastructure nodes (i.e. bridges, switches, and other infrastructure devices) connect directly,
+  dynamically and non-hierarchically to as many other nodes as possible and cooperate with one another to efficiently route data from/to clients.
+  This lack of dependency on one node allows for every node to participate in the relay of information. Mesh networks dynamically self-organize and self-configure, which can reduce installation overhead.
+  The ability to self-configure enables dynamic distribution of workloads, particularly in the event a few nodes should fail. This in turn contributes to fault-tolerance and reduced maintenance costs.
+-Wireless
+ A wireless network is a computer network that uses wireless data connections between network nodes. Note: All wireless connections eventually connect to a wired network.
+-Hierarchial
+    The hierarchical topology model is made up of the following:
+        A core layer of high-end switches optimized for network availability and performance.
+        A distribution layer of switches implementing forwarding decisions.
+        An access layer connecting users via hubs, bridges, or switches.
+------------------------------------------------------------
+DEVICES
+-Hubs are devices that allow multiple nodes to connect on the same wire (Collision Domain). https://en.wikipedia.org/wiki/Ethernet_hub
+-Switches are devices that allow multiple nodes to connect on the network, but on their own collision domain.
+    The layer 2 originating MAC address of the frame are learned from the incoming frames and are stored in the mac address table memory, also called a Content Addressable Memory (CAM) table.
+-Repeaters are devices that allow a connection to be extended beyond the normal operational cable or wireless limits.
+-Routers, Backbone of the internet. have Routing tables for ipv4 and ipv6 and how to get to them
+------------------------------------------------------------
+ Ethernet Timing
+Speed 	Bit-time
+10 Mbps    100ns
+100 Mbps   10ns
+1 Gbps     1ns
+10 Gbps   .1ns
+100 Gbps .01ns
+------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+OSI Layer 2
+Media Access Control (MAC):
+    The MAC sub-layer is responsible for controlling access to the physical transmission medium.
+    Handles the transmission and reception of data frames over the physical medium, including addressing, framing, and error checking.
+    Act as a sublayer governing protocol access to the physical medium, physical addressing, and acts as an interface between the LLC and physical layer. Most of the frame construction happens at this layer.
+        Provides the destination MAC address.
+            Either a broadcast (FF:FF:FF:FF:FF:FF) to address all nodes on LAN.
+            Unicast MAC (4A:30:10:19:10:1A) to address one node on LAN.
+            Multicast MAC (01:00:5E:00:00:C8) to address a group of nodes on a LAN. Will have a Multicast address as the destination IP.
+        Provides the source MAC address, forwards based on destination.
+            Always a Unicast MAC.
+        Calculates the Cyclic Redundancy Check (CRC) on the Frame and appends to the Frame Check Sequence (FCS) field.
+        Controls access to/from the medium.
+            Sending bit-rate (bit speed)
+            Duplex (Half or Full) and CSMA/CD functions
+            Frame delimiting and recognition
+Logical Link Control (LLC):
+    The LLC sub-layer is responsible for establishing, maintaining, and terminating logical links between network devices.
+    Provides services such as error detection and flow control to ensure reliable data transmission over the physical medium.
+    LLC defines the framing and addressing mechanism for data frames and handles the multiplexing of network layer protocols.
+    It acts as an interface between the Network Layer (Layer 3) and the MAC sub-layer, enabling communication between the two layers regardless of the underlying physical media.
+    Manages communication between devices over a single link of the network that includes error checking and data flow.
+    Multiplexes protocols to be sent over the MAC sub-layer.
+    Follows the IEEE 802.2 standard.
+    This layer provides the Ethertype to the MAC sublayer in the frame construction to identify the encapsulated protocol.
+        0x0800 for IPv4
+        0x0806 for ARP
+        0x86dd for IPv6
+        0x8100 for 802.1q VLAN tag
+------------------------------------------------------------------------------------------------------------------------
+    Switch Operation: A switch allows multiple users to access the network and can provide segmentation to isolate traffic flow and reduce collisions, relieving network congestion in most cases.
+    All switches add small latency delays due to packet processing.
+    These delays could be caused by port speed, frame processing (Cut-through or Store and Forward), port delay, and buffering delay. Deploying switches unnecessarily can actually slow down network performance.
+
+    -Store-and-Forward accepts and analyzes the entire frame before forwarding it to its destination.
+      It takes more time to examine the entire frame, but it allows the switch to catch certain frame errors and collisions and keep them from propagating bad frames through the network. This method is required to switch frames between links of different speeds; this is due to bit-timing.
+      The speed at which the bits enter one interface may be slower than the speed at which the switch needs to send the bits to a different interface.
+!!  -Cut-Through (sometimes called fast forward) only examines the destination address before forwarding it to its destination segment. This is the fastest switching mode but requires the interfaces to be the same speed.
+    -Fragment-Free read at least 64 bytes of the Ethernet frame before switching it to avoid forwarding Ethernet runt frames (Ethernet frames smaller than 64 bytes).
+      A frame should have a minimum of 46 bytes of payload plus its 18-byte frame header.
+------------------------------------------------------------------------------------------------------------------------
+CAM Table Overflow/Media Access Control (MAC) Attack
+ This attack aims to overwhelm a switch’s CAM table, which is used to store MAC address-to-port mappings, leading to a denial of service (DoS) condition or facilitating a man-in-the-middle attack.
+ This attack focuses on the Content Addressable Memory (CAM) table that stores the MAC addresses on a switch. A switch with only one VLAN will just have one CAM table. A switch will create a serarate CAM table for each VLAN supported by the switch.
+------------------------------------------------------------------------------------------------------------------------
+Describe MAC addressing
+Length:
+    48 bits or 6 bytes in length represented by 12 hexadecimal digits.
+Different Formatting:
+    Windows: 01-23-45-12-34-56
+    Unix/Linux: 01:23:45:12:34:56
+    Cisco: 1234.5612.3456
+
+Organizationally Unique Identifier (OUI) - First 24 bits or 3 bytes or 6 HEX.
+    The OUI is typically assigned by IANA to a vendor, manufacturer, or other organization.
+Vendor assigned - Last 24 bits or 3 bytes or 6 HEX.
+
+Unicast: one-one
+Multicast: one-many
+broadcast: to everyone
+------------------------------------------------------------------------------------------------------------------------
+Type II Frame
+Destination MAC, Source MAC, EtherType
+0x0800--IPv4
+0x0806--ARP
+0x86DD--IPv6
+------------------------------------------------------------------------------------------------------------------------
+VLAN TYPES
+Default- VLAN 1
+Data- User Traffic
+VOice- VOIP Traffic
+Management- switch and router management
+Native- Untagged switch and router Traffic
+------------------------------------------------------------------------------------------------------------------------
+ARP
+Operation Specifies the operation that the sender is performing:
+    1 = ARP request
+    2 = ARP reply
+    3 = RARP request
+    4 = RARP reply
+------------------------------------------------------------------------------------------------------------------------
+    -ARP - A request and response in order to resolve the destination L2 (MAC) address when only the destination L3 (IPv4) address is known.
+        ARP Request Operation code = 1
+        ARP Reply Operation code = 2
+        ARP Request:
+            When a device needs to communicate with another device on the same network segment but only knows the destination’s IP address, it broadcasts an ARP request message to the entire network.
+            The ARP request contains the sender’s IP address and MAC address and the IP address of the target device.
+        ARP Reply:
+            The device with the IP address specified in the ARP request responds with an ARP reply.
+            The ARP reply contains the target device’s MAC address.
+            Once the sender receives the ARP reply, it can use the MAC address to address frames destined for the target device.
+    -RARP - A request and response in order to resolve the destination L3 (IPv4) address when only the destination L2 (MAC) is known. (This protocol has been deprecated since the widespread use of protocols like BOOTP and DHCP.)
+        RARP Request Operation code = 3
+        RARP Reply Operation code = 4
+        When a device boots up and has no configured IP address, it broadcasts a RARP request onto the local network.
+        The RARP request contains the device’s MAC address.
+        RARP servers on the network receive the broadcast request and check their tables for a corresponding IP address entry associated with the MAC address.
+    -Gratuitous ARP - An ARP reply that was not requested
+        ARP Reply Operation code = 2
+        A gratuitous ARP messages is an ARP messages sent by a device to announce its own IP-to-MAC address mapping to other devices on the network.
+        Gratuitous ARP messages are commonly used during network initialization or to update ARP caches in other devices.
+        These are commonly used for:
+            Help in detecting IP conflicts
+            Assist in updating other system’s ARP cache
+            To inform switches of the MAC address of the client connected to its port
+            Helps pre-load other systems ARP cache when the local systems IP interface comes up
+        Maliciously used to:
+            Poision a victim’s ARP cache
+    -Proxy ARP - A device (router) answers the ARP queries for IP address that is on a different network.
+        The ARP proxy sees the ARP request and determines that the target Network address is not on the local network segment and is aware of how to reach the destination network.
+        The proxy will offer its own MAC address in response to the request.
+        Typically this device is the network gateway and is responsible to forward traffic for other networks.
+        Maliciously the ARP requests can be intercepted and a Proxy ARP sent as a response to poision the victim’s ARP Cache.
+    -ARP Cache - is a collection of Layer 2 to Layer 3 address mappings discovered utilizing the ARP request/response process. When a host needs to send a packet both the L2 and L3 addresses are needed.
+        The host will look in this table to determine if it already knows both the L2 and L3 addresses. If the target is not in the table then a ARP request is initiated.
+        The ARP cache can be populated statically but mostly its done dynamically. This cache can be exploited by attackers with the aim to poison the cache with incorrect information to either perform a DoS or MitM.
+    Command:
+      arp -a
+      ip neighbor
+------------------------------------------------------------------------------------------------------------------------
+VLAN TRUNKING PROTOCOL(VTP)
+    Key Concepts of VTP
+        1. VTP Domain
+            Definition: A VTP domain is a group of switches that share the same VTP configuration and VLAN information. All switches in the same VTP domain share VLAN information and synchronize their VLAN databases.
+            Configuration: Each switch must be configured with the same VTP domain name to participate in the same VTP domain.
+        2. VTP Modes
+            Server Mode:
+                Description: Switches in VTP Server mode can create, modify, and delete VLANs and share these VLAN configurations with other switches in the VTP domain. They also maintain a VLAN database that is synchronized with other switches.
+                Default Mode: Switches are in VTP Server mode by default.
+            Client Mode:
+                Description: Switches in VTP Client mode receive VLAN information from VTP Servers and apply these VLAN configurations, but they cannot create, modify, or delete VLANs. They rely on VTP Servers for their VLAN information.
+            Transparent Mode:
+                Description: Switches in VTP Transparent mode do not participate in VTP VLAN information exchange. They forward VTP advertisements but do not apply them or update their VLAN database based on VTP information.
+                They maintain their own VLAN configurations and do not propagate changes to other switches.
+            Off Mode:
+                Description: In some contexts, "Off" mode may be used to disable VTP entirely on a switch. This mode is not a standard VTP mode but can be used to refer to a state where VTP is not active.
+        3. VTP Advertisements
+            Types:
+                Summary Advertisements: Contain information about the VTP domain name, revision number, and VLAN information.
+                Subset Advertisements: Carry VLAN configuration changes.
+                Advertisement Requests: Request VTP advertisements from other switches.
+            Purpose: Advertisements are used to propagate VLAN changes and maintain consistency across the VTP domain.
+        4. VTP Revision Number
+            Description: Each VTP advertisement includes a revision number that is incremented with each change to the VLAN configuration. Higher revision numbers indicate more recent configurations.
+            Switches use the revision number to determine if they should update their VLAN database based on received advertisements.
+There are three versions of VTP, version 1, version 2, version 3.
+------------------------------------------------------------------------------------------------------------------------
+DYNAMIC TRUNKING PROTOCOL(DTP)
+ On by default
+ can send crafted messages to form a vlan trunk link
+ Recommended to:
+   disable DTP negotiations
+    <switchport nonegotiate>
+   Maunually assign as Access or Trunk
+    <switchport mode access> or <switchport mode trunk>
+------------------------------------------------------------------------------------------------------------------------
+    -Cisco Discovery Protocol (CDP) is a Layer 2, Cisco proprietary protocol used to share information with other directly connected Cisco devices. CDP is protocol and media independent and runs on all Cisco routers, switches, and other devices.
+        CDP Shares information such as:
+            Device ID (hostname)
+            IP address
+            Port ID (interface on the device)
+            Platform (device model)
+            Capabilities (e.g., router, switch)
+            Number and type of interface
+            IOS software version
+          CDP can be used as a Network Discovery tool as well as assist in network design decisions and troubleshooting.        
+Mitigation of CDP ATTACK
+    Disable Globally with <no cdp run>
+    Disable on an interface with <no cdp enable>
+
+    -Foundry Discovery Protocol (FDP) is a proprietary data link layer protocol, originally developed by Foundry Networks, which was bought by Brocade. 
+        Similar to CDP, FDP enables Brocade devices to advertise to other directly connect Brocade devices on the network.
+    -Link Layer Discovery Protocol (LLDP) was designed by IEEE 802.1AB to be a vendor-neutral neighbor discovery protocol similar to CDP.
+        LLDP also operates at layer 2 and shares similar information as does CDP with directly connected devices that support LLDP.
+------------------------------------------------------------------------------------------------------------------------
+SPANNING TREE PROTOCOL(STP)
+   Stops circulating frames
+      -Elect the Root Bridge
+      -Identify the Root port on each non-root bridge
+      -Identify the Designated port for each segment
+
+------------------------------------------------------------------------------------------------------------------------
+Port Security
+The purpose of configuring port security technologies is to limit, restrict, and protect network access. Configuring port security can be done on active access ports to limit the number of users or MAC addresses allowed to access onto the network.
+This will help to alleviate attacks such as DoS, MAC Address Flooding, and most unauthorized access.
+    MAC Address Limit:
+        Port security allows administrators to specify the maximum number of MAC addresses allowed on a switch port.
+        When enabled, the switch monitors the MAC addresses of devices connected to the port and takes action if the number of MAC addresses exceeds the configured limit.
+    MAC Address Learning:
+        When a device sends traffic through a switch port, the switch learns the device’s MAC address and associates it with the port.
+        The switch maintains a table, known as the MAC address table or CAM table, which maps MAC addresses to switch ports.
+    Violation Actions:
+        Administrators can define violation actions to be taken when port security violations occur.
+        Common violation actions include shutting down the port, sending an SNMP trap, or logging a message.
+        These actions help alert administrators to potential security breaches and mitigate unauthorized access attempts.
+        The following are the possible modes:
+            protect - Drops any frames with an unknown source addresses.
+            restrict - Same as protect except it additionally creates a violation counter report.
+            shutdown - Places the interface into an "error-disabled" state immediately and sends an SNMP trap notification. This is typically the default mode.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+DAY 2
+
+
+Layer 3 ROUTING
+Network Layer
+Internetworking was developed because Local Area Networks (LAN) needed the ability to communicate with one another.
+    Addressing Schemes for Network (Logical Addressing)
+        Each device on the network has a logical addresses associated with it. This address is independent of the hardware device and must be unique in an internetwork.
+    Routing
+        the moving of data across a series of interconnected networks is the job of devices and software that exist at this layer. The network layer must handle incoming packets from various sources,
+        determine their final destination, and send them to the appropriate interface and forwarding devices to be processed and routed once again.
+    Encapsulation
+        Encapsulation of messages received from higher layers must be performed to be passed on to the data-link layer.
+    IP Fragmentation and Reassembly
+        Due to constraints on bandwidth and other limiting factors, the network layer must be able to fragment packets that are too large and re-assemble the data in order at the destination device.
+    Error Handling and Diagnostics
+        The network layer uses special helper protocols like ICMP and ARP that allow logically connected devices to exchange information about the status of the network or devices themselves.
+
+IPv4
+RFC 1918 Private addresses:
+    RFC 1918 defines three blocks of IPv4 address space reserved for private use:
+        10.0.0.0/8 (10.0.0.0 - 10.255.255.255)
+        172.16.0.0/12 (172.16.0.0 - 172.31.255.255)
+        192.168.0.0/16 (192.168.0.0 - 192.168.255.255)
+
+class
+A 0-217    /8
+B 128-191  /16
+C 192-223  /24
+D 224-239
+E 240-255
+------------------------------------------------------------------------------------------------------------------------
+Unicast A-C
+Multicast D
+Broadcast Any where host portion is all on
+------------------------------------------------------------------------------------------------------------------------
+IPv4 Address Scope
+-Public
+-Private(RFC 1918)
+-Loopback(127.0.0.0/8)
+-Link-local((APIPA)169.254.0.0/16) 
+-Multicast(ckass d)
+------------------------------------------------------------------------------------------------------------------------
+More fragment 0 offset = first packet
+more fragment offset = still a packet
+no fragment offset = last packet
+------------------------------------------------------------------------------------------------------------------------
+os fingerprinting with ttl
+    Linux: TTL from 34-64
+    Windows: TTL from 98-128
+    Cisco: TTL from 225-255
+------------------------------------------------------------------------------------------------------------------------
+DHCP
+-DORA process
+Discover, Offer, Request, Acknowledge
+------------------------------------------------------------------------------------------------------------------------
+ICMP
+Echo Request( type 8)
+Echo Reply( type 0)
+Destination Unreachable(type 3)
+Redirect(type 5)
+Time Exceeded( type 11)
+------------------------------------------------------------------------------------------------------------------------
+ICMPv4 TRACEROUTE
+-ICMP( WINDOWS DEFAULT)
+-UDP(LINUX DEFAULT)
+-TCP
+_______________________________________________________________________________________________________________________
+
+https://net.cybbh.io/public/networking/latest/02_network/_images/IPv6_Header.png
+    IPv6 address types
+        Unicast Addresses IPs are a "one to one" communication between two nodes.
+            These are similar in function to that of IPv4 unicast addresses.
+        Multicast Addresses Used for one to many communications and routing protocols.
+            These perform the same function as the Class D or multicast addresses of IPv4.
+            Range ff00::/8 - ff00:: thru ffff::
+        Anycast Addresses These addresses can fall within the Global, Unique-Local, or Link-Local address scopes. 
+They differ from unicast in that more than one device can be configured with the same address. These are typically used to address several network gateways. Each gateway can be configured with the same anycast address.
+Any of these devices can supply the service request for the client.
+These can also be used for servers when trying to load balance a particular service.
+            Anycast addresses are assigned to a group of interfaces, but packets are routed to the nearest interface in the group based on routing metrics.
+They are not specifically defined by a separate address block but use the global unicast address space.
+
+    IPv6 address scope:
+        Unspecified address is used to indicate the absence of an address.
+            ::/128
+        Loopback Address IPv6 address used by a node on a vitural interface to send packets to itself. This is the same as the 127.0.0.1 is for IPv4.
+            ::1/128
+        Global Unicast Addresses IPv6 addressess that are routable over the Internet.
+            Scope is 2000::/3 - 2000:: thru 3fff:
+                2001:0000:/32 - reserved for Teredo tunneling
+                2001:20::/28 - reserved for ORCHIDv2
+                2002::/16 - reserved for 6to4 tunneling
+        Unique-Local Addresses (ULAs) IPv6 addresses the are routable locally within a site, not globally routable across the Internet. These perform a similar function as the RFC 1918 private IPv4 addresses and will require NAT to translate the address to a Global Unicast address for communication over the Internet.
+            Scope is fc00::/7 - fc00:: thru fdff::
+        Multicast addresses
+            Scope ff00::/8 - ff00:: thru ffff::
+                ffx0::/8 - reserved
+                ffx1::/8 - interface-local - spans only a single interface on a host. Used for loopback multicast.
+                ffx2::/8 - link-local - spans the local network. Does not traverse network bounderies. Comparable to 224.0.0.0/24 for IPv4.
+                ffx3::/8 - realm-local - spans farther than link-local but under determination of the administrator. Should not bound farther than those below.
+                ffx4::/8 - admin-local - smallest scope that can be administratively configured.
+                ffx5::/8 - site-local - spans a single site of an organization.
+                ffx8::/8 - organization-local - spans to all sites in a single organization.
+                ffxe::/8 - global - spans all hosts on the internet and is unbounded.
+                ffxf::/8 - reserved
+        Link-Local Addresses IPv6 addresses that are assigned to a IPv6 enabled interface for direct link on link communcation
+_______________________________________________________________________________________________________________________
+Stateless Address Autoconfiguration (SLAAC) (default):
+    SLAAC is the primary method of IPv6 address autoconfiguration and is similar to IPv4 DHCP in some respects but simpler.
+    In SLAAC, routers on the local network periodically multicast Router Advertisement (RA) messages (FF02::1) to announce their presence and provide network configuration information.
+    Hosts on the network receive these RA messages and use the information contained within them to configure their IPv6 addresses and other parameters.
+    Hosts can also send Router Solicitation (RS) message (FF02::2) to request network information. This is commonly done when a host first powers on. The router will respond with a RA message to the host sent using FF02::1.
+    Each host uses its unique identifier (based on the MAC address or another mechanism) and the network prefix advertised in the RA messages to generate its IPv6 address.
+Stateful/Stateless Address Autoconfiguration (DHCPv6):
+    DHCPv6 is an extension of the DHCP protocol used in IPv4 networks, and it provides additional configuration options beyond basic address assignment.
+    With DHCPv6, hosts can obtain IPv6 addresses, DNS server information, and other network configuration parameters from a DHCPv6 server.
+    DHCPv6 can be used in conjunction with SLAAC, allowing hosts to obtain additional configuration options from DHCPv6 while still using SLAAC for address assignment.
+_______________________________________________________________________________________________________________________
+ Explain Neighbor Discovery Protocol (NDP)
+IPv6 nodes use NDP to discover other nodes on the local link. This is to determine other node’s link-layer addresses to find routers, and to maintain reachability information about the paths to active neighbor nodes.
+NDP is vulnerable to various attacks if not secured.
+NDP defines five ICMPv6 packet types for the purpose of router solicitation, router advertisement, neighbor solicitation, neighbor advertisement, and network redirects.
+    Router Solicitation (Type 133)
+        Hosts inquire with Router Solicitation messages to locate routers on an attached link. Routers which forward packets not addressed to them generate Router Advertisements immediately upon receipt of this message 
+        rather than at their next scheduled time.
+        Sent using the multicast address of FF02::2 (all routers) group.
+    Router Advertisement (Type 134)
+        Routers advertise their presence together with various link and Internet parameters either periodically, or in response to a Router Solicitation message.
+        Sent using the multicast of FF02::1 (all nodes) group.
+    Neighbor Solicitation (Type 135)
+        Neighbor solicitations are used by nodes to determine the link layer address of a neighbor, or to verify that a neighbor is still reachable via a cached link layer address.
+        Similar to an ARP Request when using IPv4. IPv6 does not use ARP however. It uses Neighbor Solicitation to request the MAC address of the destination.
+        Duplicate Address Detection (DAD). Sent by host to the IPv6 address it intends to use. This is to determine if the address is already in use.
+    Neighbor Advertisement (Type 136)
+        Neighbor advertisements are used by nodes to respond to a Neighbor Solicitation message.
+        Similar to an ARP Reply when using IPv4. IPv6 does not use ARP however. It uses Neighbor Advertisement to respond to a Neighbor Solicitation.
+    Redirect (Type 137)
+        Routers may inform hosts of a better first hop router for a destination.
+_______________________________________________________________________________________________________________________
+
+
+    Ultimate route is any routing table entry that has a next-hop IPv4 address, exit interface, or both.
+    Level 1 route is any route with the subnet mask (CIDR) is equal to or less than the classful mask of the network address. A level 1 route can be a:
+        Network route - A network route that has a subnet mask equal to that of the classful mask.
+            Class A - 255.0.0.0 (/8)
+            Class B - 255.255.0.0 (/16)
+            Class C - 255.255.255.0 (/24)
+        Supernet route - A network route with a mask less (smaller) than the classful mask.
+            192.168.0.0/16
+            These can be a range of IP addresses aggregated into a single, larger network address.
+            Commonly used as network summary routes.
+        Default route - A default route is a static route with the address 0.0.0.0/0 or ::.
+    Parent route is a level 1 network that is subnetted. A parent roue will never be an ultimate route.
+    Level 2 child route are the subnets of a classful network address.
+    The primary functions of a router are to:
+        Determine the best path to send packets.
+            Builds and maintains routing tables to make this determination.
+            Uses directly connected networks, static routes, and dynamic routing protocols to assist in building and maintaining this routing table.
+        Forward packets toward their destination (this is called routing).
+            Strips the Frame header off packet from incoming interface.
+            Adds new Frame header to packet for outgoing interface.
+_______________________________________________________________________________________________________________________
+Administrative Distance
+    Routers uses an AD to determine the best source route to install into the IP routing table. The AD represents the "trustworthiness" of the route; the lower the AD, the more trustworthy the route source.
+    Fr example, if a router learned about the 10.0.0.0/24 from EIGRP, OSPF and RIP, the EIGRP route entry would be in installed into the routing table. This is because EIGRP AD 90 is lower than OSPF AD 110 and RIP AD 120.
+        If anything should happen with the EIGRP route then the OSPF route is installed into the routing table.
+-----
+Routing Protocol with Metric Name
+RIP            Hop count
+EIGRP          Bandwidth, Delay, Load, Reliability
+OSPF           Cost (Bandwidth)
+IS-IS          Cost (Assigned by Admin)
+BGP            Policy assigned by Admin
+-----
+Route AD
+Route Source     | Default AD
+ Connected        0
+ Static           1
+ external BGP     20
+ EIGRP            90
+ OSPF             110
+ IS-IS            115
+ RIP              120
+_______________________________________________________________________________________________________________________
+Routed vs Routing Protocols
+-Routed protocols allows data to be routed. These protocols provide an addressing scheme and sub-netting.
+The addressing scheme identifies the individual host and the network to which it belongs. Each host address must be unique. All hosts on an internetwork must use the services of a routed protocol to communicate.
+-Routing Protocols are used by routers to communicate routing information with each other. Unless all routes are manually entered into the router, the router needs to learn from other routers about the networks that they know.
+They use this shared information to populate their routing tables so that they can make better decisions when forwarding routed protocols such as IPv4.
+
+Routing Protocols \/\/\/
+    Interior Gateway Protocol (IGP) - is a type of protocol used for exchanging routing information between gateways (commonly routers) within an autonomous system
+        RIP (v1, v2, ng)
+        EIGRP and EIGRP for IPv6
+        OSPF (v2 and v3)
+        IS-IS
+    Exterior Gateway Protocol (EGP) - is a routing protocol used to exchange routing information between autonomous systems
+        BGP
+_______________________________________________________________________________________________________________________
+Distance Vector Routing Protocols
+    Distance: This identifies how far away the destination network is from the router and is based on a metric such as the hop count, cost, bandwidth, delay, and more. 
+        It takes the learned distance from their neighbor, adds the distance to their neighbor, and this gives them a total distance.
+    Vector: This specifies the direction to the remote network. The router advertises a path that it has learned which allows access to a remote network via one of its interfaces.
+
+Link State Routing Protocols
+Compared to distance vector routing protocols, a router configured with a link-state routing protocol can create a complete view of the network.
+ This is built by gathering information from all of the other routers to build a network topology.
+Link state routing protocols tend to flood the network with Link State Advertisements (LSAs). Each router receives these updates and begins to build a map of the entire network.
+ It will use its algorithms to compute the best routes from this map to all remote networks. After this is done no periodic updates are sent unless there is a change in the topology.
+Link-state protocols work best in situations where:
+    The network design is hierarchical, usually occurring in large networks
+    Fast convergence of the network is crucial
+    The administrators have good knowledge of the implemented link-state routing protocol
+There are two link-state IPv4 IGPs:
+    OSPF: Popular open standards-based routing protocol
+    IS-IS: Popular in service provider networks
+
+_______________________________________________________________________________________________________________________
+BGP
+BGP is one of only 2 Exterior Gateway Routing Protocols (EGP) created. The other called simply Exterior Gateway Protocol (EGP) was developed in 1982 by Eric C Rosen and David Mills and specified in RFC 827.
+   It was a simple protocol that was eventually made obsolete by BGP version 4 published in RFC 4271.
+BGP operates differently compared to IGP protocols. Rather than automatically advertising all internal networks, BGP is configured to specify the precise network and CIDR it will advertise. 
+   Instead of making best path selection based of metrics, it uses "paths" (which is loosly similar to hops used by RIP), network policies, or rule-sets. This makes BGP one of the most complicated routing protocols to configure.
+   Where simple configuration errors with an IGP will have an impact on traffic within your network. Whereas a misconfiguration with BGP could have broad ramifications on the traffic routing throughout the entire world.
+Wikipedia BGP link
+    Roadmap of the Internet - If DNS is the "address-book" of the Internet then BGP is the Roadmap or "Google Maps" of the Internet. It defines the path all traffic takes through the Internet. 
+       The Internet is nothing more than a web of millions of interconnected networks.
+    Routes traffic between Autonomous System (AS) Number - Internet Service Providers (ISP) and large organizations are assigned an Autonomous System (AS) Number by IANA.
+          Each AS is viewed as a single entity to the rest of the world but within the AS it can contain thousands of subnetworks and routers. List of AS numbers and owners according to bgplokingglass.com
+        Think of an AS like a city or town and highways and interstates are the BGP pathways between them.
+    Advertises IP CIDR address blocks - Each AS is used to represent a CIDR block(s) of IP addresses and can contain thousands of individual routers and subnetworks.
+           Rather than advertise each individual network address and CIDR throughout the AS like IGP do, BGP is manually configured to advertise "summary routes" that encompass all the internal networks. How does BGP work video
+        Think of this like street and building numbers in a town or city.
+    Establishes Peer relationships - BGP is an application layer protocol that communicates using TCP port 179. ISPs use BGP in order to share routing information with their peers.
+            Each ISP’s edge router uses TCP to establish "peer" relationships between other ISP edge routers in another AS to share addressing information. Rather than sending their updates to any BGP listening router, BGP must be manually configured to communicate with 'peer' neighbor routers. This eventually forms a web of communicating routers. APNIC BGP map
+    Complicated configuration - Does not operate and share routes automatically like other IGP. Network addresses must be manually configured to be advertised. 
+           Due to lack of trust between ISPs they employ series of filters and policies which makes BGP must harder and more complicated to configure.
+        This complicated configuration can lead to many errors and attacks over the internet.
+    Complicated and slow path selection - BGP uses a series of items in its path determination. BGP path selection reference from CiscoZine.com. "Best Path" in BGP does not mean its the most optimal path.
+          It only routes by AS #'s and not the attributes within the AS themselves. Typically BGP prefers the route that takes the packet through the fewest amount of AS’s.
+
+_______________________________________________________________________________________________________________________
+First hop redundanc protocols
+Hot Standby Router Protocol (HSRP)
+A Cisco-proprietary FHRP designed to allow for transparent fail-over of IPv4 networks.
+Defined in RFC 2281.
+One router interface will be set as "active" and the others set as "standby".
+Once the active interface will forward traffic to other networks.
+Standby interfaces serve as backups in case the active fails.
+Active interface sends multicast "Hello" packets to inform the backups that its still operational.
+IPv4: HSRP for IPv4 operates on the default multicast address 224.0.0.2 (v1) or 224.0.0.102 (v2).
+IPv6: HSRP for IPv6 operates on the multicast address ff02::66.
+HSRP States
+    Initial: The initial state when the router has not yet started HSRP.
+    Learn: The router has not yet learned the virtual IP address.
+    Listen: The router has learned the virtual IP address but is not yet the active or standby router.
+    Speak: The router is participating in the HSRP election process and sending hello messages.
+    Standby: The router is ready to take over as the active router if needed.
+    Active: The router is currently handling traffic and serving as the default gateway for the virtual IP address.
+Timers
+    Hello Timer: Controls how frequently HSRP hello messages are sent between routers. Default is 3 seconds.
+    Hold Timer: Defines how long a router will wait for hello messages before declaring the active router to be down. Default is 10 seconds.
+    Goodbye Timer: Used by the active router to notify the standby router of its impending failure. This is an optional feature in HSRP.
+Virtual Router Redundancy Protocol
+    An industry-standard protocol defined in RFC 3768 that offers similar functionality to HSRP.
+    Like HSRP, VRRP allows multiple routers to work together to provide redundancy for the default gateway.
+    One router is elected as the master router, and the others are backup routers.
+    The master router sends periodic advertisements to inform the backup routers of its status.
+    If the master router fails, one of the backup routers is elected as the new master.
+    IPv4: VRRP for IPv4 operates on the default multicast address 224.0.0.18.
+    IPv6: VRRP for IPv6 operates on the multicast address ff02::12.
+    VRRP States
+        Initialize: The router has not yet started VRRP.
+        Backup: The router is a backup and will take over if the master fails.
+        Master: The router is the active router handling traffic for the virtual IP address.
+    Timers
+        Advertise Interval: Defines how frequently the master router sends VRRP advertisements to inform backup routers of its status. The default interval is 1 second.
+        Master Down Interval: The time a backup router waits after not receiving advertisements before assuming the master router has failed. The default is 3 times the advertise interval.
+    Versions
+        VRRPv1 - Defined in RFC 2338, VRRPv1 was the original version of the protocol.
+            VRRPv1 supports IPv4 only.
+            Uses an 8-bit virtual router identifier (VRID), which limits the number of virtual routers to 256.
+            Lacks support for authentication, which can lead to potential security issues.
+            Provides basic router redundancy with failover and virtual IP address sharing.
+        VRRPv2 - Defined in RFC 3768, VRRPv2 builds on VRRPv1 with several improvements.
+            VRRPv2 still supports IPv4 but with enhanced features over VRRPv1.
+            Uses a 256-bit VRID, allowing more flexibility in configuration.
+            Adds support for MD5 authentication to secure VRRP advertisements and prevent unauthorized routers from participating.
+            Supports preemption, allowing a higher-priority router to take over as the master if it becomes available.
+            Improves stability and robustness over the original VRRPv1 implementation.
+        VRRPv3 - Defined in RFC 5798, VRRPv3 extends VRRP to support IPv6 in addition to IPv4.
+            Provides support for IPv6 addresses, which is essential for modern networks transitioning to IPv6.
+            Uses the multicast address ff02::12 for IPv6 communication.
+            Maintains a 256-bit VRID, similar to VRRPv2.
+            Continues to support MD5 authentication and extends security features.
+            Includes additional capabilities for more sophisticated network environments.
+Gateway Load Balancing Protocol (GLBP)
+    GLBP is another Cisco proprietary protocol that extends the functionality of HSRP and VRRP by providing load balancing in addition to redundancy.
+    GLBP allows multiple routers to share the traffic load for a virtual IP address, providing both redundancy and increased network capacity.
+    GLBP uses an active virtual gateway (AVG) to assign different virtual MAC addresses to different routers, distributing traffic across multiple gateways.
+    Cisco introduced IPv6 support in IOS release 12.2(33)SXI in August 2007.
+    IPv4: GLBP for IPv4 operates on the default multicast address 224.0.0.102.
+    IPv6: GLBP for IPv6 operates on the multicast address ff02::66.
+    GLBP States
+        Initialization: The router has not yet started GLBP.
+        Listen: The router has received GLBP advertisements but has not yet assumed any role.
+        Speak: The router is participating in the election process and sending advertisements.
+        Active: The router is the AVG and is managing load balancing and redundancy.
+        Standby: The router is a backup for the AVG and will take over if the AVG fails.
+    Timers
+        Hello Timer: Defines how frequently GLBP hello messages are sent. Default is 3 seconds.
+        Hold Timer: Defines how long a router waits for hello messages from the AVG before considering it down. Default is 10 seconds.
+    Load Balancing Methods
+        Round-Robin: Distributes traffic evenly across all available routers.
+        Weighted Load Balancing: Allows routers to be assigned different weights, with traffic distributed based on these weights.
+        Host-Based Load Balancing: Distributes traffic based on the MAC address of the requesting host, which can help to achieve more balanced traffic distribution
+_______________________________________________________________________________________________________________________
+Port Ranges
+0-1023 Well Known(system)
+1024-49151 Registered(users)
+49152-65535 Dynamic(private)
+
+TCP 3 WAY HANDSHAKE
+Syn -> Syn,Ack -> Ack
+
+Udp    
+0-1    Source Port    0-15    16 bits
+Specifies the port that localhost is listening on for traffic during this communication.
+2-3    Destination Port    16-31    16 bits
+Specifies the port on the receiving(destination) host that it is listening on for this communication.
+4-5    Length    32-47    16 bits
+Specifies the length of the UDP header and data.
+6-7    Checksum    48-63    16 bits
+Used for error checking of the header and data. This is optional for IPv4 and mandatory in IPv6.
+_______________________________________________________________________________________________________________________
+VPN
+Virtual Private Networks (VPN) allows connections through a network that is not accessible to everyone else.
+This "private" connection makes is look like a direct connection, when in fact it is not. VPNs work by encapsulating an IP packet into another IP packet for traversal across a (generally) public network.
+The outer IP packet headers used for the traversal is then removed and the original packet headers are then used for further routing decisions.
+VPN Connection
+
+VPN connections are typically unencrypted but can be secured using encryption, such as IPSEC or TLS/SSL, to make it more secure for sensitive information.
+Some protocols used to provide confidentiality for VPN tunnels.
+    IPsec: Provides a suite of protocols for secure IP communication, including Authentication Header (AH), Encapsulating Security Payload (ESP), and Internet Key Exchange (IKE).
+    SSL/TLS: Utilizes the SSL/TLS protocol suite to create secure connections between clients and servers, commonly used in SSL VPNs.
+    OpenVPN: An open-source VPN protocol that uses SSL/TLS for encryption and authentication, known for its flexibility and cross-platform compatibility.
+
+TYPES OF VPN
+    Remote Access VPN (Client-to-Site VPN):
+        Allows individual users to securely connect to a private network from remote locations over the internet.
+        These VPNs are commonly used by employees working from home or while traveling to access company resources such as files, applications, and internal systems.
+        Remote access VPNs typically use protocols like SSL/TLS or IPsec to create encrypted tunnels between the user’s device and the corporate network.
+        Uses OpenVPN, IPsec, or Wireguard installed on the client system to create the tunnel to the Network Access Server in the main office.
+
+    Site-to-Site VPN: (aka router-to-router VPN)
+        Connects multiple sites or networks together over the internet, creating a secure communication link between them.
+        Site-to-site VPNs are commonly used to connect branch offices to a central headquarters, or to connect geographically distributed data centers.
+        Can be configured as point-to-point, point-to-multipoint, or full mesh.
+        Uses IPSEC, MPLS, SSL, PPTP, L2TP, and others to create the tunnel.
+_______________________________________________________________________________________________________________________
+L2TP (TCP 1701)
+    Layer Two Tunneling Protocol (L2TP) serves as an extension of the Point-to-Point Tunneling Protocol (PPTP) commonly employed by internet service providers (ISPs) to establish virtual private networks (VPNs).
+The primary objective of L2TP is to enable secure data transmission through the creation of tunnels. To uphold security and privacy standards, L2TP necessitates the use of an encryption protocol within the established tunnel.
+    L2TP exhibits the capability to transport a diverse range of Layer 2 (L2) data types across an Internet Protocol (IP) or Layer Three (L3) network. 
+The initiation of this process involves the establishment of a tunnel connecting an L2TP Access Concentrator (LAC) and an L2TP Network Server (LNS) on the internet. 
+This configuration facilitates the implementation of a Point-to-Point Protocol (PPP) link layer, which is encapsulated and seamlessly transferred across the internet for secure and efficient communication.
+_______________________________________________________________________________________________________________________
+ PPTP (TCP 1723)
+    Point-to-Point Tunneling Protocol (PPTP) stands as a foundational networking protocol that empowers the secure deployment of Virtual Private Networks (VPNs) over the Internet. Conceived by Microsoft and collaborative contributors, 
+PPTP is intricately designed to forge a private and encrypted communication conduit between clients and servers, guaranteeing the secure transmission of data.
+    Authentication Mechanisms: PPTP boasts support for a range of robust authentication mechanisms, including Password Authentication Protocol (PAP), Challenge Handshake Authentication Protocol (CHAP), and Microsoft CHAP (MS-CHAP). 
+These mechanisms play a pivotal role in fortifying the verification processes, ensuring the genuine identity of the connecting parties.
+    Encapsulation and Encryption Expertise: PPTP demonstrates its prowess by encapsulating data within its proprietary packets, establishing a secure tunnel for data transmission. 
+Furthermore, it incorporates encryption protocols such as Microsoft Point-to-Point Encryption (MPPE) to safeguard the confidentiality of the transmitted data. 
+This dual-layered approach enhances the privacy and integrity of the communication channel.
+    Awareness of Limitations: Recognizing its historical prevalence, it’s crucial to acknowledge the limitations associated with PPTP. 
+While it was widely adopted in the past, PPTP has exhibited security vulnerabilities, prompting a gradual decline in usage. Organizations and users have increasingly favored more secure VPN protocols like L2TP/IPsec and
+OpenVPN to address evolving security standards and ensure a higher level of data protection.
+_______________________________________________________________________________________________________________________
+IP Security (IPSec)
+IPsec (Internet Protocol Security) is a suite of protocols used to secure IP communications by providing encryption, authentication, and integrity protection at the network layer (Layer 3) of the OSI model.
+It is widely used to establish Virtual Private Networks (VPNs) and secure data transmission over IP networks, including the internet.
+Transport mode and Tunnel mode are two operational modes of IPsec (Internet Protocol Security) used to provide security for IP communications.
+  "TWO MODES"
+    Transport Mode:
+        In Transport mode, IPsec only encrypts the payload (data) of the original IP packet, leaving the original IP header intact.
+        Transport mode is typically used for end-to-end communication between two hosts or devices.
+        When using Transport mode, only the data portion of the IP packet is protected by IPsec, while the original IP header, including the source and destination IP addresses, remains visible to intermediate devices.
+        Transport mode is often used for scenarios where the communicating endpoints need to establish a secure connection while maintaining direct communication with each other.
+        Example use cases for Transport mode include securing communication between individual hosts or devices within a private network or securing VoIP (Voice over IP) traffic between two endpoints.
+    Tunnel Mode:
+        In Tunnel mode, IPsec encapsulates the entire original IP packet within a new IP packet, adding an additional IP header. Tunnel mode is commonly used to create secure VPN (Virtual Private Network) connections between networks or network devices, such as routers or firewalls.
+        When using Tunnel mode, the original IP packet, including its header and payload, is encrypted and encapsulated within a new IP packet.
+        The new IP header contains the IP addresses of the VPN gateway devices (tunnel endpoints), which are responsible for encrypting and decrypting the data as it passes through the VPN tunnel.
+        Tunnel mode provides network-level security, ensuring that all traffic between the VPN gateway devices is encrypted and protected from eavesdropping or tampering.
+        Example use cases for Tunnel mode include connecting branch offices to a central headquarters network over the internet, creating secure connections between remote users and a corporate network, or establishing site-to-site VPN connections between data centers.
+_______________________________________________________________________________________________________________________
+OpenVPN
+OpenVPN is an open-source VPN (Virtual Private Network) software that provides secure communication over the internet by creating encrypted tunnels between devices or networks. It is widely used for remote access VPNs, site-to-site VPNs,
+and other secure networking applications.
+OpenVPN requires special software that implements the OpenVPN protocol. There are client and server versions. The client software runs on your device (computer, phone, etc.) and the server software runs on the VPN provider’s server. 
+This software creates the encrypted tunnel and manages the data transmission.
+It’s known for being very secure due to strong encryption algorithms and multiple authentication methods. OpenVPN uses the OpenSSL library to provide encryption of both the data and control channels.
+It offers a high degree of customization, making it suitable for a wide range of uses. Because of the customization options, setting up OpenVPN can be more complex for non-technical users compared to some other VPN solutions.
+    OpenVPN can be configured to use UDP or TCP as it’s transport layer protocols:
+        UDP Protocol (Default):
+            OpenVPN often uses UDP for communication, providing a lightweight and connectionless transport protocol suitable for VPNs.
+            The default UDP port number for OpenVPN is 1194.
+        TCP Protocol:
+            OpenVPN can also be configured to use TCP for communication, which can be useful in scenarios where UDP traffic is restricted or blocked.
+            The default TCP port number for OpenVPN is 1194, but it can be configured to use other port numbers such as port 443.
+_______________________________________________________________________________________________________________________
+Understand proxies
+
+    A proxy, or proxy server, functions as a vital intermediary that stands between a user’s device, be it a computer or smartphone, and the vast expanse of the internet. Operating as a sophisticated gateway,
+    it expertly facilitates the exchange of requests and responses between the user and the destination server,
+    seamlessly navigating the intricate web of online communication. Proxies, with their multifaceted capabilities, empower users and organizations by delivering anonymity, content filtering, and performance optimization.
+    In this dynamic role, proxies serve as instrumental guardians of privacy, gatekeepers for access control,
+    and enhancers of overall internet efficiency.
+      This allows for your device’s information, such as IP address and possibly your MAC address, to stay hidden. Besides privacy, a proxy can provide additional benefits such as load balancing or security.
+      When utilizing proxies for secure communications, we must remember that the client only creates a secure connection to the proxy, and the proxy will create the secure connection with the remote server. 
+      This means that if the proxy server should be compromised, the data communication can be intercepted.
+Typical communication with a proxy server is done over TCP port 1080 but The Onion Router (TOR) browsing uses TCP port 9050 by default.
+    Here are key aspects of a proxy:
+        Anonymity: One of the primary functions of a proxy is to provide anonymity for the user. When you connect to a website through a proxy, the website sees the IP address of the proxy server rather than your actual IP address.
+                   This can be useful for privacy and security reasons.
+        Content Filtering: Proxies can be configured to filter and block access to specific content or websites. This is often employed in organizations and institutions to control and monitor internet usage.
+        Access Control: Proxies can control access to certain resources based on predefined rules. This allows administrators to restrict or grant access to specific websites, services, or content.
+        Improved Performance: In some cases, proxies can improve network performance by caching frequently requested content. When a user requests a resource that has been cached, the proxy can deliver it directly,
+                reducing the load on the destination server and improving response times.
+        Security: Proxies can enhance security by acting as a barrier between the user and the internet. They can filter out malicious content, block access to known malicious websites, and provide an additional layer of defense against cyber threats.
+        Load Balancing: Proxies can distribute incoming network traffic across multiple servers, helping to balance the load and ensure efficient utilization of resources. This is known as load balancing and can improve the overall performance and reliability of a network.
+    Types of Proxies:
+        Forward Proxy: Acts on behalf of clients, typically used to access the internet.
+        Reverse Proxy: Acts on behalf of servers, often used to distribute incoming client requests to multiple servers.
+        Transparent Proxy: Operates without altering the request or response, providing anonymity.
+        Anonymous Proxy: Hides the user’s IP address but informs the server that a proxy is being used.
+        Elite or High-Anonymous Proxy: Provides the highest level of anonymity by not disclosing the use of a proxy.
+_______________________________________________________________________________________________________________________
+Examine SOCKS protocol
+Socks 4/5 (TCP 1080)socks
+    SOCKS (Socket Secure) is a protocol that facilitates communication between clients and servers through a proxy server.
+        Initiates connections through a proxy
+        Uses various Client / Server exchange messages
+        Client can provide authentication to server
+        Client can request connections from server
+        Defined in RFC 1928
+        Versions:
+            SOCKS4
+                Initial version of the SOCKS protocol, introduced in the early 1990s.
+                No Authentication, meaning that it does not require clients to authenticate themselves before connecting to the proxy server.
+                Only IPv4
+                Only TCP support. No UDP support.
+                No Proxy binding. Client’s IP is not relayed to destination.
+            SOCKS5
+                Support for Authentication, allowing clients to authenticate themselves using various methods, such as username/password,
+                GSS-API (Generic Security Services Application Program Interface), or digital certificates.
+                IPv4 and IPv6 support
+                TCP and UDP support
+                Supports Proxy binding. Client’s IP is relayed to destination.
+_______________________________________________________________________________________________________________________
+Examine Network Basic Input Output System (NetBIOS) protocol
+    -NetBIOS, an acronym for Network Basic Input/Output System, emerged as a protocol suite crafted by IBM during the early 1980s.
+This suite offers a collection of services along with an application programming interface (API), facilitating network communication across local area networks (LANs).
+Initially conceived for IBM’s PC Network, NetBIOS eventually evolved into a de facto standard for LAN communication within the Microsoft Windows ecosystem.
+    -NetBIOS provides services related to the session layer of the OSI model allowing applications on separate computers to communicate over a local area network. 
+The outputs from NetBIOS can provide computer names, group assignments, and MAC addresses of nodes.
+    -NetBIOS vs. DNS: The Domain Name System (DNS) is a directory for communication between devices over the internet.
+An internet connection is required to use DNS, but NetBIOS is available to all machines on a local area network. 
+If a windows system is unable to resolve  name via DNS, then it will look for a WINS server, then finally uses NetBIOS.
+______________________________________________________________________________________________________________________
+Examine Server Message Block (SMB) protocol
+SMB/CIFS (TCP 139/445 AND UDP 137/138)
+    The Server Message Block (SMB) protocol serves as a communication protocol predominantly utilized by Microsoft Windows-equipped computers. Its primary function is to facilitate the sharing of files, printers, serial ports, and various communications among network nodes. For user authentication, SMB employs either the NTLM or Kerberos protocols.
+    Additionally, SMB offers an authenticated inter-process communication (IPC) mechanism. Originally conceived in 1983 by Barry A. Feigenbaum at IBM, SMB aimed to provide shared access to files and printers within a network of systems running IBM’s OS/2.
+    Subsequently, in 1987, Microsoft and 3Com implemented SMB in LAN Manager for OS/2. During this period, SMB utilized the NetBIOS service atop the NetBIOS Frames protocol as its foundational transport. Over time, Microsoft integrated SMB into Windows NT 3.1, continuously updating it to function with newer underlying transports, such as TCP/IP and NetBT. A notable development is the introduction of SMB over QUIC, which made its debut in Windows Server 2022.
+smb
+smbclient -L <IP Address>
+    Allowed devices to establish connections to other devices on network to share files, printers and other things.
+    Several versions since its release in 1984:
+        SMBv1 was released in 1984 by IBM for file sharing in DOS. Modified by Microsoft in 1990 for integration into Windows GUI.
+        CIFS was released in 1996. Microsoft launched an initiative to rename SMB to Common Internet File System (CIFS).
+Included more features and support for symbolic links, hard links, larger file sizes. Rolled out with Windows 95.
+        SMBv2.0 debuted in 2006 for Windows Vista. It featured a notable boost in performance because of increased efficiency — fewer commands and subcommands meant better speeds.
+        SMBv2.1 released with Windows 7, bringing improved performance.
+        SMBv3.0 released with Windows 8 with many updates. Most notable of which is enhanced security — the protocol started supporting end-to-end encryption.
+        SMBv3.0.2 released with Windows 8.1. It offered the ability to increase security and performance by completely disabling SMBv1.
+        SMBv3.1.1 was released in 2015 with Windows 10. It added more security elements to the protocol, like AES-128 encryption, protection
+from man-in-the-middle attacks, and session verification.
+    SMB Rides over Netbios - allows applications to communicate over a LAN using a NetBIOS name. Depricated due to DNS. Netbios Wiki
+        Netbios Dgram Service - UDP 138
+        Netbios Session Service - TCP 139
+    Third-Party SMB Implementations:
+        SAMBA
+            (Samba Wiki)
+            Developed to offer file and print services for Windows clients on Unix-based systems, including Linux and other Unix variants.
+            Facilitates seamless interaction between Unix-based systems and Windows networks, providing features like file sharing, printer services, and authentication.
+            Enables Unix-based servers to function as file and print servers within a Windows network, ensuring compatibility and interoperability.
+            Samba is compatible with a wide range of Unix-based operating systems, encompassing Linux, Solaris, AIX, and various BSD variants, including Apple’s macOS Server and macOS client (Mac OS X 10.2 and later).
+            Supports various versions of the SMB protocol, allowing non-Windows systems to actively participate in Windows networking environments.
+        Netsmb
+            NSMB, which encompasses Netsmb and SMBFS, constitutes a group of in-kernel SMB client implementations within BSD operating systems. * Originally introduced by Boris Popov in FreeBSD 4.4,
+            this family of implementations has proliferated across various BSD systems, including NetBSD and macOS.
+            Over time, these implementations have undergone significant divergence.
+        NQ
+            NQ stands as a suite of portable SMB client and server implementations crafted by Visuality Systems, an Israel-based company founded in 1998 by Sam Widerman, 
+            who previously served as the CEO of Siemens Data Communications.
+        MoSMB
+            MoSMB is a proprietary SMB implementation designed for Linux and other Unix-like systems, created by Ryussi Technologies. It exclusively supports SMB versions 2.x and 3.x.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
