@@ -1005,32 +1005,354 @@ Configuration File: Settings that exist on either the client or server that dict
     -R [bind_address:]port:host:hostport = Sets up remote port forwarding, allowing connections to a specified port on the remote server to be forwarded over the SSH tunnel to a host and port on the local machine or another remote server. This can be useful for exposing services running on the local machine to the remote server or other remote machines. ssh student@10.10.0.40 -L 1234:172.16.40.10:22
     -D {port} = Specifies a local "dynamic" port forwarding port. This creates a SOCKS proxy on the specified port, allowing other applications to tunnel their traffic through the SSH connection securely. ssh student@172.16.1.15 -D 9050
 
+Key Generator: Creates user keys and host keys via ssh-keygen
+Known-hosts database: Collection of host keys that the client and server refer to for mutual authentication.
+Agent: Stores keys in memory as a convenience for users to not input pass-phrases repetitively.Signer: This is a program that signs the hostbased authentication packets.
 
+    SSH-TRAN
+    This can be thought of as the building block that provides initial connection, server authentication, basic encryption, integrity services, and compression if needed. SSH-TRANS, or the SSH Transport Layer Protocol, is responsible for establishing a secure, encrypted channel between the SSH client and server. Once this is established, a client has a secure full duplex stream to an authenticated remote peer.
+        Connection Establishment:
+            Three-way handshake occurs when the client requests a connection establishment to the server’s TCP port 22 by default. Another port can be specified with the use of the (-p port) option.
+            Client and server exchanges their SSH protocol versions to ensure compatibility.
+        Key Exchange (KEX):
+            Client and Server exchange their public keys (User and Host respectively).
+        Integrity Protection:
+            SSH-TRANS employs integrity-checking mechanisms such as HMAC (Hash-based Message Authentication Code) to verify data integrity and detect any tampering during transmission.
+        Encryption:
+            SSH client and server agree on a key exchange algorithm (such as Diffie-Hellman, ECDH, or others) to securely negotiate a shared secret.
+        Server Authentication:
+            SSH-TRANS includes mechanisms for server authentication, where the server presents its digital certificate to prove its identity to the client, preventing man-in-the-middle attacks.
+    SSH-USERAUT
+    This component is sent over the SSH-TRANS connection and used to authenticate with the client with the server. During this stage the client learns about format of authentication requests, conditions, and available methods of authentication. SSH uses algorithms in compliance with DSS defined in FIPS PUB 186-4. (RSA, DSA, etc.) Most commonly this will be RSA.
+        Authentication Methods:
+            SSH-USERAUTH supports various authentication methods, including:
+                Password authentication
+                Public-key cryptography (RSA, DSA, ECDSA) ( -i ~/.ssh/id_rsa)
+            Keyboard-interactive authentication (e.g., challenge-response mechanisms)
+            Certificate-based authentication (X.509)
+        Authorization:
+            Once authenticated, SSH-USERAUTH handles authorization checks to determine the level of access and privileges granted to the authenticated user on the server.
+    SSH-CONNEC
+    SSH-CONNECT, or the SSH Connection Protocol, manages the interactive sessions and secure shell access between the SSH client and server. This component provides the exciting things over a single pipe that is provided by SSH-TRANS. It includes support for multiple interactive and non-interactive sessions. It multiplexes several channels through the underlying connections to allow for TCP, X, and agent forwarding, terminal handling, remote program execution.
+        Shell Access:
+            Interactive shell sessions (command-line access) where users can execute commands and interact with the remote server’s operating system.
+            Non-interactive SSH sessions are commonly used in automated scripts or batch jobs where commands or operations need to be executed on a remote system without manual intervention.
+        Secure File Transfer:
+            Secure file transfer operations using protocols like SCP (Secure Copy Protocol) or SFTP (Secure File Transfer Protocol), which runs over the SSH connection.
+        Port Forwarding:
+            SSH tunneling (port forwarding), allowing clients to securely tunnel other network protocols (e.g., HTTP, database connections) over the SSH connection.
+                (-L) Local Port Forward
+                (-R) Remote Port Forward
+                (-D) Dynamic Tunnel (SOCKS Proxy)
+        Session Management:
+            SSH-CONNECT manages the lifecycle of SSH sessions, including session setup, maintenance, and termination, ensuring efficient and secure communication between the client and server.
+        X11 Forwarding (-X):
+            Negotiate the capability to forward X11 (graphical) applications from the server to the client securely over the SSH connection.
+        Terminal Settings:
+            Terminal Type and Size: Specify the terminal type (e.g., xterm, vt100) and size (rows and columns) for the SSH session.
+        Logging and Debugging (-v, -vv, -vvv):
+            Logging Levels: Determine the level of logging and debugging information to be captured during the SSH session for troubleshooting purposes.
+        Compression (-C):
+            Compression Algorithms: Specify whether data compression will be used to reduce bandwidth usage during the SSH session (e.g., zlib compression).
+        Connection Settings:
+            Session Multiplexing: Decide whether multiple logical SSH sessions can share a single underlying network connection (improving efficiency).
+            Window and Buffer Sizes: Negotiate the size of data windows and buffers used for transmitting data between the client and server.
+______________________________________________________________________________________________________________________
+ Analyze Hypertext Transfer Protocol (Secure) (HTTP(s))
+HTTP(S) (TCP 80/443)
+    The Hypertext Transfer Protocol (HTTP) is an application layer protocol used for communication between web browsers and web servers.
+        It serves as the foundation for data communication on the World Wide Web, enabling the retrieval and display of web pages, images, videos, and other resources.
+    Key characteristics and features of HTTP include:
+        Client-Server Architecture: HTTP follows a client-server model, where the client (usually a web browser) sends requests to the server, and the server responds with the requested data or performs the requested actions
+        Stateless Protocol: HTTP is stateless, meaning each request from the client to the server is independent and does not retain any information about previous requests.
+        Request-Response Paradigm: Communication in HTTP is basedon a request-response paradigm. The client sends an HTTP request to the server, specifying the desired action (such as retrieving a web page or submitting a form). 
+The server processes the request and sends an HTTP response back to the client, containing the requested data or an appropriate status code.
+            Request Methods - performed by the client to a server.
+                GET - Most common method used. Used to retrieve data from a server.
+                POST - Used to send data to the API server. Generally used with storing a file or form.
+                PUT - Similar to POST. Used to send data to the API to update or create a resource. It differs from POST in that it is used only on a particular resource.
+                PATCH - used to apply partial modifications to the resource.
+                DELETE - used to delete the resource at the specified URL.
+                HEAD - Similar to GET except it does not return the message body.
+                OPTIONS - used to return data describing what other methods and operations the server supports at the given URL.
+HTTP server status Codes - server response to a request method.
+    1xx - Informational
+    2xx - Successful
+    3xx - Redirection
+    4xx - Client error
+    5xx - Server error
+______________________________________________________________________________________________________________________
+Analyze Domain Name System (DNS) protocol
+DNS (QUERY/RESPONSE) (TCP/UDP 53)
+    Used as a means to resolve domain names to an IP addresses usable by the client system. Typically used to resolve IP addresses of web domains.
+    Client queries and server responses are typically sent using UDP port 53.
+    DNS responses over UDP are generally limited to 512 bytes. This limit is due to the constraints of the original DNS protocol specification and the size of a UDP packet. 
+        If the response data exceeds this limit, DNS switches to TCP to handle the query.
+    TCP is used when DNS responses are larger than 512-bytes.
+        DNS Zone transfers are typically over 512-bytes so TCP is used for the transmission.
+        Zone transfers are used to replicate DNS databases between DNS servers. These transfers can involve a large amount of data, especially for zones with many records.
+        DNS zone transfers are conducted using TCP because they typically involve transferring large amounts of data.
 
+Types Of DNS Records
+Type A
+    IPv4 Address record, used to map hostnames to an IP address of the host.
+Type AAAA
+    IPv6 address record, used to map hostnames to an IPv6 address of the host.
+Type MX
+    Mail exchange record, Maps a domain name to a list of message transfer agents for that domain.
+Type TXT
+    Text record, human-readable text in a DNS record, but can also store machine-readable data. Often used for verification and authentication.
+Type NS
+    Name Server record, specifies the authoritative name servers for a domain.
+Type SOA
+    Start of authority, provides authoritative information about the zone, including administrative details and zone-level settings.
+Type AXFR
+    AXFR (Full Zone Transfer) facilitates the transfer of the entire DNS zone data, including all resource records, from one DNS server (the master) to another DNS server (the slave).
+Type IXFR
+    IXFR (Incremental Zone Transfer) Retrieves only the changes made since the last transfer.
+Type CNAME
+    Canonical Name creates an alias for a domain name, pointing it to another canonical domain.
+Type PTR
+    Used for reverse DNS lookups to map an IP address to a domain name.
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Analyze File Transfer Protocol (FTP)
 
+FTP (TCP 20/21)
+File Transfer Protocol is a standard network protocol that is used for file transfer between a client and a server.
+Authentication is performed via a username and password, but can also be disabled in favor of anonymous mode if the FTP server is configured for it. 
+The drawback with FTP is that all communication is clear text, including the initial authentication.
+FTP has two moes of operation, Active and Passive.
+______________________________________________________________________________________________________________________
+1 FTP Active
+    Active
+  A client initiates a connection with a server on port 21 from the client’s ephemeral high port. 
+    The three way handshake is completed and the client listens on its ephemeral high port + 1, the client sends the port N+1 command to the server on port 21 (control port). 
+Ex: if the command to the server is from ephemeral port 1026, it would listen on port 1027.
+    Once that is done, the server initiates a connection to the client’s ephemeral high (1027) from the server’s data port (20) and the data is transferred.
+"WALKTHROUGH"
+    The client’s command port contacts the server’s command port and sends a command for the client’s ephemeral high port + 1
+    The FTP server responds to the client with an ACK to the client’s command port
+    The FTP server initiates a connection from its data port 21 to the client’s specified data port (ephemeral high + 1)
+    The FTP client sends an ACK back to the server’s data port 20 from the client’s ephemeral high data port. This also leads to issues when using ftp through an SSH tunnel which will be discussed later.
+______________________________________________________________________________________________________________________
+ FTP Passive
+    Passive
+    Passive FTP sidesteps the issue of Active mode by reversing the conversation. The client initiates both the command and data connections.
+"WALKTHROUGH"
+    The client’s command port (1029) contacts the server’s command port (20) and sends the PASV command.
+    The FTP server responds to the client with an ACK to the client’s ephemeral high command port (1029) letting the client know the server’s listening data port (2020).
+    The FTP client initiates the data connection from its ephemeral high port (1030) to the FTP server’s listening data port (2020)
+    The FTP server sends an ACK back to the client’s ephemeral high data port (1030)
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Analyze Trivial File Transfer Protocol (TFTP)
+TFTP (UDP 69)
+    Trivial File Transfer Protocol (TFTP) is a simple File Transfer Protocol which allows a client to get/put a file from/to a remote host. 
+        One of its primary uses is in the early stages of nodes booting from a local area network.
+    TFTP has been popular due to its simple easy of implementation.
+    IT pros and Sys Admins typically use TFTP configuration for:
+        Transferring files
+        Remote-booting without hard drives
+        Upgrading codes
+        Backing up network configurations
+        Backing up router configuration files
+        Saving IOS images
+        Booting PCs without a disk
+______________________________________________________________________________________________________________________
+Analyze Simple Mail Transfer Protocol (SMTP)
+SMTP (TCP 25)
+Simple Mail Transfer Protocol (SMTP) is an internet standard used for sending electronic mail. SMTP is not encrypted and will require other methods to secure the data.
+______________________________________________________________________________________________________________________
+ Analyze  Post Office Protocol (POP)
+POP (TCP 110)
+Post Office Protocol (POP) is an older internet standard used to retrieve electronic mail from a server. Most implementations of POP will delete the server stored mail once the client downloads them. 
+This meant that the client can only read the email from the system that was used to download them. The latest version is POP3.
+______________________________________________________________________________________________________________________
+Analyze Internet Message Access Protocol (IMAP) - no encryption
+IMAP (TCP 143)
+Similar to POP in that it is used to download electronic mail from a server.
+It differs from POP in that it typically synchronizes with the server so that the client can download the mail but have it still stored on the server.
+This allowed clients to retrieve their emails from multiple systems. The current implementation is IMAP4.
+______________________________________________________________________________________________________________________
+DHCP (UDP 67/68)
+Dynamic Host Configuration Protocol (DHCP) is an internet standard used to assign IP address parameters across an enterprise. 
+    This prevent administrators from having to manually assign IP configuration on each host individually. Clients communicate with the server over UDP port 67 and the server communicates with the client over UDP port 68.
+    IPv4 DHCP process (D.O.R.A)
+        Discover - Sent as a L2 and L3 broadcast by the client to discover a DHCP server. Broadcast can only reach devices on the same network. 
+            If the DHCP server is not on the local network then the router must use the ip helper command to relay these requests to a centralized DHCP server.
+        Offer - Sent as a unicast to the client. The offer will contain the offered IP address configurations.
+        Request - Sent as a broadcast back to the server. This is broadcasted because the client could have received 2 or more offers. 
+            The broadcast will announce to all DHCP servers as to which offer was accepted. The client will send a gratuitous ARP to attempt to determine if the IP address is already in use.
+        Acknowledge - Final response from the server sent as a unicast to the client to confirm the lease reservation. Will contain the expiration timeframe of the lease.
+   
+IPv6 DHCP process - Similar to the process of DHCPv4 except the names and communication methods differ.
+        Solicit - Sent to the server as a multicast.
+        Advertise - Unicast response from server.
+        Request - Multicast to the server.
+        Reply - Unicast server response.
+______________________________________________________________________________________________________________________
+Analyze Network Time Protocol (NTP) 
+NTP (UDP 123)
+The Network Time Protocol (NTP) is a networking protocol for clock synchronization between computer systems over packet-switched, variable-latency data networks. 
+  NTP is intended to synchronize all participating computers to within a few milliseconds of Coordinated Universal Time (UTC).
+    Uses stratum levels to determine the distance from the "authoritative" time source.
+        Stratum 0 - Identifies the device as the "authoritative" time source.
+        Stratum 1 - Syncs their time from Stratum 0.
+        Stratum 2 - Syncs their time from Stratum 1.
+        Stratum 3 to 15 - Follows same scheme as above. Stratum 15 is the highest level.
+        Stratum 16 - Signifies that the device is unsynchronized.
+______________________________________________________________________________________________________________________
+Analyze Terminal Access Controller Access-Control System Plus (TACACS+) Protocol
+TACACS (TCP 49) SIMPLE/EXTENDEDThe Terminal Access Controller Access-Control System Plus (TACACS+) is a network security protocol used for centralized authentication,
+authorization, and accounting (AAA) services in network devices such as routers, switches, and firewalls. Developed by Cisco Systems, TACACS+ provides a robust framework for controlling access to
+network resources and enforcing security policies.
+Analyze Remote Authentication Dial-In User Service (RADIUS) protocol
+______________________________________________________________________________________________________________________
+RADIUS (UDP 1645/1646 AND 1812/1813)
+Remote Authentication Dial-In User Service (RADIUS) is a open standard networking protocol used for centralized authentication, authorization, and accounting (AAA) services in network environments.
+It enables devices like network access servers (NAS), VPN gateways, and wireless access points to authenticate users and authorize their access to network resources.
+______________________________________________________________________________________________________________________
+Analyze Diameter Protocol
+DIAMETER (TCP 3868)
+Diameter is a networking protocol used for Authentication, Authorization, and Accounting (AAA) functions in network systems, primarily in telecommunications networks.
+ It is an evolution of the older RADIUS (Remote Authentication Dial-In User Service) protocol, providing enhanced features and capabilities.
+Diameter protocol was develop to enhance the AAA capablities that RADIUS does not support. Such as:
+    Supports application-layer acknowledgments and defines failover algorithms and the associated state machine.
+    Transmission-level security support via TLS/TCP and DTLS/SCTP. Diameter can work over TCP, Stream Control Transmission Protocol (SCTP), or UDP. SCTP is recommended.
+    Diameter includes support for error handling, capability negotiation, and mandatory/non-mandatory Attribute-Value Pairs (AVPs).
+Header information:
+    Version - field MUST be set to 1 to indicate Diameter Version 1.
+    Message Length - indicates the length message including the header fields and the padded AVPs. Message Length field is always a multiple of 4.
+    Command Flags - R(equest), P(roxiable), E(rror), T(Potentially retransmitted message), or r(eserved).
+    Command Code - used in order to communicate the command associated with the message.
+    Application ID - enables the base protocol stack to route the message to the Accounting, Authentication, or the other Diameter applications.
+    Hop-by-Hop Identifier - correlates the information with the peer (next-hop or neighbor) entity.
+    End-to-End Identifier - correlates the information with the endpoint for the transaction, which may be several hops away.
+    AVPs - are a method of encapsulating information relevant to the Diameter message.
+______________________________________________________________________________________________________________________
+Analyze Simple Network Management Protocol (SNMP)
+SNMP (UDP 161/162)
+Simple Network Management Protocol (SNMP) is an Internet Standard protocol for collecting and organizing information about managed devices on IP networks. Devices that typically support SNMP include cable modems,
+    routers, switches, servers, workstations, printers, and more.
+    3 Key SNMP Components
+        SNMP Manager - It is a centralized system used to monitor the network. It is also known as Network Management Station (NMS)
+        SNMP agent - It is a software management software module installed on a managed device. Managed devices can be network devices like PC, router, switches, servers, etc.
+        Management Information Base - MIB consists of information on resources that are to be managed. This information is organized hierarchically. It consists of objects instances which are essentially variables.
+    SNMP Versions
+        SNMPv1 – This was the first implementation, operating within the structure management information specification, and described in RFC 1157. It uses community strings for authentication and UDP only.
+        SNMPv2c – This version has improved support for efficiency and error handling and is described in RFC 1901. It was first introduced in RFC 1441 and is more appropriately known as SNMP v2c. 
+            It uses community strings for authentication. It uses UDP but can be configured to use TCP.
+        SNMPv3 – This version improves security and privacy. It was introduced in RFC 3410. It uses Hash-based MAC with MD5 or SHA for authentication and DES-56 for privacy. This version uses TCP.
+            Therefore, the higher the version of SNMP, the more secure it will be.
+            noAuthNoPriv – This (no authentication, no privacy) security level uses community string for authentication and no encryption for privacy.
+            authNopriv – This security level (authentication, no privacy) uses HMAC with MD5 or SHA for authentication and no encryption is used for privacy.
+            authPriv – This security level (authentication, privacy) uses HMAC with MD5 or SHA for authentication and encryption uses DES-56(56-bit) algorithm, 3DES(168-bit), AES(128/192/256-bit).
 
+______________________________________________________________________________________________________________________
+Analyze Real-time Transport Protocol (RTP)
+RTP (UDP any above 1023)
+RTP (Real-time Transport Protocol) is primarily used for streaming real-time media over IP networks.
+    It is a protocol specifically designed for transmitting audio and video data in a way that supports time-sensitive applications, such as voice and video communication, streaming media, and live broadcasts.
+    Voice over IP (VoIP): RTP is widely used in VoIP applications to transport real-time voice data packets over IP networks.
+It works in conjunction with protocols like SIP (Session Initiation Protocol) to enable voice communication over the internet.
+    Video Conferencing: RTP forms the basis of video conferencing systems, allowing participants to transmit and receive real-time video streams during live meetings or conferences.
+    Streaming Media: RTP is commonly used for streaming media services, such as online video streaming platforms, live broadcasts, and webinars. 
+        It facilitates the efficient transmission of video and audio data to multiple clients in real-time.
+    IPTV (Internet Protocol Television): RTP is used in IPTV systems to deliver television content over IP networks, enabling users to stream television programs and video-on-demand services over the internet.
+Multimedia Applications: RTP is utilized in various multimedia applications, including gaming, remote monitoring, video surveillance, and interactive multimedia services.
+        It provides a reliable and efficient transport mechanism for transmitting time-sensitive media data.
+Real-time Data Transmission: RTP can be used for real-time data transmission scenarios where timely delivery is crucial. For example, it may be employed in sensor networks, control systems,
+        or any application that requires the transmission of real-time data streams.
+______________________________________________________________________________________________________________________
+Analyze Remote Desktop Protocol (RDP)
+RDP (TCP 3389)
+Developed by Microsoft to offer remote access to a computer’s desktop GUI as if they was physically at the system rather than just a command-line interface.
+The protocol is widely supported across most Windows, Unix, Linux, and macOS operating systems. Other proprietary options were developed to provide remote desktop support but
+    the administrator typically must install the client software on each device before being able to remotely access devices with these 3rd party tools.
+______________________________________________________________________________________________________________________
+ Analyze Kerberos
+Kerberos (UDP 88)
+Kerberos is a network authentication protocol that ensures secure authentication for client-server applications. It was created by MIT as a network authentication protocol using secret-key cryptography. It relies on a trusted Key Distribution Center (KDC) server.
+Here’s a simplified explanation of the Kerberos process:
+    Authentication Request:
+        The client sends an authentication request to the KDC, providing its identity (username) and the desired server’s identity (service principal name).
+    Ticket Granting Ticket (TGT) Request:
+        The KDC verifies the client’s identity and issues a TGT if the credentials are valid.
+        The TGT is encrypted using the client’s password or a shared secret key.
+    TGT Issuance:
+        The KDC sends the encrypted TGT to the client, which stores it securely.
+    Service Ticket Request:
+        When the client wants to access a specific service, it requests a Service Ticket (ST) for that service from the KDC.
+        The request includes the TGT and the desired service’s identity.
+    ST Issuance:
+        The KDC verifies the TGT and issues an ST for the requested service if the TGT is valid.
+        The ST is encrypted using a session key shared between the client and the service.
+    Service Access:
+        The client presents the ST to the service, proving its authenticity and intent to access the service.
+        The service decrypts the ST using the session key and verifies its validity.
+        If the ST is valid, the service grants access to the client.
+Kerberos utilizes symmetric key cryptography for secure ticket encryption and decryption, ensuring data confidentiality and integrity. It also supports mutual authentication between the client and server.
+    Kerberos is widely used in enterprise environments, particularly in Microsoft Windows with Active Directory.
+        It ensures secure authentication and access to network resources while protecting against unauthorized access and replay attacks.
+______________________________________________________________________________________________________________________
+Analyze Lightweight Directory Access Protocol (LDAP)
+LDAP (TCP 389 and 636)
+The Lightweight Directory Access Protocol (LDAP) is an application protocol used for accessing and managing distributed directory information services. 
+LDAP provides a standardized method for querying, modifying, and authenticating against directory services, such as Active Directory and OpenLDAP.
+LDAPS (LDAP over SSL/TLS) is a secure communication protocol used to encrypt LDAP traffic between LDAP clients and servers.
+    It provides a layer of security to LDAP authentication and directory access by encrypting data exchanged over the network, protecting it from eavesdropping and tampering.
+    LDAP provides access to distributed directory services that act in accordance with X.500 data and service models. These protocol elements are based on those described in the X.500 Directory Access Protocol (DAP).
+    LDAP as an authentication service follows the client/server model. The LDAP model has two main steps when a user requests non-TLS bind authentication. These are (in order):
+        TCP three-way handshake (SYN, SYN/ACK, ACK)
+        LDAP bind() function (performed synchronous or asynchronous)
+LDAP:
+    LDAP (unencrypted): TCP Port 389
+    LDAPS (LDAP over SSL/TLS): TCP Port 636
+    follows a client-server model, where LDAP clients send requests to directory servers, which in turn provide responses.
+    hierarchical data stores that organize and store structured information, such as user profiles, organizational units, and network resources.
+    uses a directory schema to define the structure and attributes of directory entries, allowing for flexible data modeling.
+    supports various operations, including search, add, modify, delete, and bind (authentication).
+    uses a string-based query language called the LDAP Data Interchange Format (LDIF) to search and retrieve data from directory servers.
 
+    LDAP Directory Structure - Directory Information Tree (DIT):
+        The DIT is a hierarchical structure that organizes entries based on their distinguished names (DNs). The hierarchy is similar to a file system directory tree and is composed of:
+            Entries: Each entry represents an object in the directory, such as a user, group, or organization.
+                Root: The top-level of the hierarchy. The root entry is the starting point of the directory tree.
+                    Example: The root DN might be something like dc=example,dc=com, representing the top-level domain for the directory
 
+                Base DN: The starting point for searches within the directory. It represents a specific part of the hierarchy from which you want to begin your search.
+                    Example: ou=Users,dc=example,dc=com might be used as the base DN for searching user entries.
+                Organizational Units (OUs): Containers within the directory used to organize entries into logical groups, such as departments or roles.
+                    Example: ou=Sales,dc=example,dc=com and ou=IT,dc=example,dc=com.
+                Entries: Individual objects in the directory, each identified by a unique DN. Entries can represent users, groups, devices, etc.
+                    Example: uid=johndoe,ou=Users,dc=example,dc=com represents a user entry for John Doe.
+        Attributes: Each entry contains a set of attributes, which are key-value pairs representing information about the entry.
+            Attribute Syntaxes: LDAP attributes have associated syntaxes, which define the data type and format of the attribute’s values. Common syntaxes include:
+                String: Textual data
+                Integer: Integer values
+                Boolean: True or false values
+                DN: Distinguished Name (reference to another entry)
+                GeneralizedTime: Date and time
+            User Attributes
+                uid: Unique identifier for the user (often the username)
+                cn: Common name (usually the full name)
+                sn: Surname
+                givenName: Given name
+                mail: Email address
+                telephoneNumber: Phone number
+                description: Additional information about the user
+                userPassword: Password (though storing passwords in plain text is highly discouraged)
+                memberOf: Groups the user belongs to
+            Group Attribute
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                cn: Common name of the grou
+                description: Description of the group
+                member: List of members (usually user DNs)
+            Computer Attributes
+                cn: Common name of the computer
+                description: Description of the computer
+                operatingSystem: Operating system
+                ipaddress: IP address
+______________________________________________________________________________________________________________________
 
 
 
