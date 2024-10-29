@@ -850,10 +850,160 @@ from man-in-the-middle attacks, and session verification.
             who previously served as the CEO of Siemens Data Communications.
         MoSMB
             MoSMB is a proprietary SMB implementation designed for Linux and other Unix-like systems, created by Ryussi Technologies. It exclusively supports SMB versions 2.x and 3.x.
+___________________________________________________________________________________________________________________________________________________________________________
+LAYER 6
+    Presentation Layer - This layer deals with the Translating, Formatting, Encryption, and Compression of data.
+        Data Translation and Transformation:
+            The Presentation Layer can translate data between different character encoding schemes, such as ASCII, Unicode, EBCDIC, etc., ensuring compatibility between systems with different encoding requirements.
+                ASCII Encoding: American Standard Code for Information Interchange represents text characters using 7 or 8 bits, mapping each character to a numeric value.
+                Unicode Encoding: A character encoding standard that encompasses most of the world’s writing systems, assigning unique numerical values to characters, emojis, and symbols.
+                UTF-8 Encoding: A variable-width character encoding capable of encoding all Unicode characters using one to four bytes, commonly used in web pages and email.
+                UTF-16 Encoding: A character encoding capable of encoding all Unicode characters using two or four bytes, often used in programming languages like Java and JavaScript.
+                UTF-32 Encoding: A fixed-width encoding scheme that represents each Unicode code point with four bytes, ensuring straightforward indexing but resulting in larger file sizes compared to UTF-8 and UTF-16.
+                Base64 Encoding: Converts binary data into ASCII characters, useful for encoding binary data such as images or attachments in emails or transmitting binary data over text-based protocols.
+                URL Encoding: Converts special characters into a format that can be transmitted over the Internet, replacing reserved characters with percent-encoded representations.
+        Data Formatting and Syntax Parsing:
+            The Presentation Layer can format data according to predefined standards or protocols, ensuring that the data conforms to the expected syntax and structure. It parses the incoming data to extract relevant information and present it to the application layer in a meaningful way.
+                Text-Based Formats:
+                    Plain Text (.txt): Simplest format containing unformatted text without any styling or formatting.
+                    Comma-Separated Values (.csv): Tabular format where data values are separated by commas, commonly used for storing and exchanging spreadsheet or database data.
+                    Extensible Markup Language (.xml): Markup language for encoding structured data in a human-readable format, widely used in web services, configuration files, and data exchange.
+                    JavaScript Object Notation (.json): Lightweight data interchange format commonly used for transmitting data between a server and a web application, as well as storing configuration data.
+                Document Formats:
+                    Portable Document Format (.pdf): A format developed by Adobe that preserves document formatting and layout across different platforms, widely used for sharing and distributing documents.
+                    Microsoft Word Document (.docx): Word processing format developed by Microsoft, used for creating and editing text-based documents with rich formatting, images, and other multimedia elements.
+                    Rich Text Format (.rtf): Cross-platform document format that supports text formatting, images, and other media, compatible with various word processors.
+                Image Formats:
+                    Joint Photographic Experts Group (.jpg/.jpeg): Commonly used format for storing compressed digital images, suitable for photographs and complex images with many colors.
+                    Graphics Interchange Format (.gif): Format supporting animated images and short video clips, widely used for web animations and memes.
+                    Portable Network Graphics (.png): Lossless image format that supports transparency and compression, commonly used for web graphics and digital images.
+                Audio Formats:
+                    MP3 (.mp3): Compressed audio format that reduces file size while preserving audio quality, widely used for storing and sharing music and audio files.
+                    Waveform Audio File Format (.wav): Uncompressed audio format that preserves original audio data without loss of quality, commonly used for professional audio editing and recording.
+                    Advanced Audio Coding (.aac): Format for encoding digital audio data, known for its high compression efficiency and widespread support in multimedia applications.
+                Video Formats:
+                    Moving Picture Experts Group-4 (.mp4): Standard format for storing digital video and multimedia content, widely supported by video playback software and devices.
+                    Audio Video Interleave (.avi): Multimedia container format developed by Microsoft, capable of storing audio and video data in a single file, commonly used for video editing and playback.
+                    Flash Video (.flv): Format developed by Adobe for streaming video content over the internet, commonly used for web-based video players and online streaming platforms.
+        Data Encryption and Decryption:
+            The Presentation Layer can perform encryption and decryption of data to ensure its confidentiality and integrity during transmission. It encrypts data before transmission and decrypts it upon receipt, allowing secure communication between systems.
+                Symetric: AES, Blowfish, Twofish, DES, and RC4
+                Asymetric: PKI, Diffie-Hellman, DSS, RSA, Elliptic curve
+                TLS (Transport Layer Security):
+                    TLS is primarily a transport layer protocol that provides secure communication over a network. However, cryptographic algorithms used in TLS (such as RSA, Diffie-Hellman, and AES) may be invoked at the presentation layer for encrypting data before presentation to the user.
+                    In web browsers, TLS encryption ensures secure communication between the client and server, protecting sensitive data such as login credentials, payment information, and personal details during transmission.
+                SSL (Secure Sockets Layer):
+                    SSL is the predecessor to TLS and operates similarly to TLS in providing secure communication over a network. Like TLS, SSL may involve cryptographic operations at the presentation layer to encrypt data before rendering.
+                    Although SSL has been largely deprecated in favor of TLS, some legacy systems and applications may still use SSL for securing data.
+                PGP (Pretty Good Privacy):
+                    PGP is an encryption program that provides cryptographic privacy and authentication for data communication. It can be used for encrypting and decrypting emails, files, and other forms of data.
+                    While PGP is commonly associated with email encryption (which operates at the application layer), it may also involve cryptographic operations at the presentation layer for rendering encrypted messages in email clients.
+                S/MIME (Secure/Multipurpose Internet Mail Extensions):
+                    S/MIME is a standard for secure email messaging that provides encryption and digital signature functionality. It enables users to send encrypted and digitally signed emails using cryptographic algorithms such as RSA and AES.
+                    S/MIME operations may involve cryptographic processing at the presentation layer for rendering encrypted email messages and verifying digital signatures.
+                OpenPGP (Open Pretty Good Privacy):
+                    OpenPGP is an open-source standard that builds upon PGP for secure communication. It defines formats for encrypted messages, digital signatures, and key management.
+                    OpenPGP implementations may involve cryptographic operations at the presentation layer for rendering encrypted messages and verifying digital signatures.
+                End-to-End Encryption (E2EE):
+                    E2EE is a method of secure communication that ensures only the communicating users can read the messages. Encryption and decryption occur exclusively at the endpoints, providing strong confidentiality guarantees.
+                    While E2EE is typically implemented at the application layer, cryptographic techniques used for encryption and decryption may involve operations at the presentation layer for data rendering.
+        Data Compression and Decompression:
+            The Presentation Layer can compress data to reduce its size before transmission, optimizing network bandwidth and speeding up data transfer. It decompresses the data upon receipt, restoring it to its original format.
+            Sometimes data gets to big to transmit over the network so the Presentation layer handles compression.The primary role of Data compression is to reduce the number of bits to be transmitted. It is important in transmitting multimedia such as audio, video, text etc.
+                Zip, TAR, RAR, 7zip, CAB
+            Lossless Compression:
+                Lempel-Ziv (LZ) Compression: This family of algorithms, including LZ77 and LZ78, identifies repeated patterns in the data and replaces them with shorter codes, achieving compression without loss of information.
+                DEFLATE Compression: DEFLATE combines LZ77 with Huffman coding and is used in popular formats like ZIP, gzip, and PNG for lossless compression.
+                Run-Length Encoding (RLE): RLE replaces sequences of repeated data with a single value and a count, making it effective for compressing data with long runs of identical values.
+                Burrows-Wheeler Transform (BWT): BWT rearranges the characters in the input data to facilitate compression. It’s often used in conjunction with other techniques like Move-to-Front (MTF) and Huffman coding.
+                Huffman Coding: Huffman coding generates variable-length codes for characters based on their frequencies in the input data, achieving efficient compression without loss of information.
+                Arithmetic Coding: Arithmetic coding encodes a sequence of symbols into a single floating-point number within a specified range, offering high compression ratios for lossless data.
+                Bzip2 Compression: Bzip2 uses the Burrows-Wheeler Transform (BWT) and Huffman coding to achieve high compression ratios, particularly effective for compressing text files.
+                Delta Encoding: Delta encoding compresses data by encoding the differences between consecutive values in a sequence, suitable for compressing data with predictable patterns or incremental updates.
+                PPM (Prediction by Partial Matching): PPM predicts the next symbol in a sequence based on its context, achieving high compression ratios for text and structured data.
+                LZMA (Lempel-Ziv-Markov chain Algorithm): LZMA combines LZ77 with additional modeling techniques like Markov chains for high compression ratios, commonly used in formats like 7z and XZ.
+                LZ77 and LZ78: These are foundational algorithms in the LZ family, used for identifying and encoding repeated patterns in data for compression.
+                Shannon-Fano Coding: Similar to Huffman coding, Shannon-Fano coding generates prefix codes based on symbol probabilities to achieve lossless compression.
+                Gzip Compression: Gzip uses DEFLATE compression and is commonly used for compressing files on Unix-based systems.
+                Zstandard (Zstd): Zstd is a modern compression algorithm that offers a good balance between compression speed and ratio, suitable for various types of data.
+                LZW (Lempel-Ziv-Welch) Compression: LZW is used in formats like GIF and compresses data by replacing repeating patterns with codes from a dictionary.
+                CAB (Cabinet File Format): CAB is a Microsoft-developed file archive format commonly used for software installation packages and system files, often employing the LZX compression algorithm.
+            Lossy Compression:
+                JPEG Compression: JPEG (Joint Photographic Experts Group) is widely used for compressing digital images. It achieves compression by discarding high-frequency information and optimizing color representation, resulting in smaller file sizes but some loss of image quality.
+                GIF Compression: Although GIF (Graphics Interchange Format) primarily supports lossless compression, it can also be used in a lossy mode by reducing the color palette or by discarding color information. This can result in smaller file sizes but may degrade image quality, particularly for complex images.
+                MPEG Compression: MPEG (Moving Picture Experts Group) is a suite of standards for compressing audio and video data. It typically uses lossy compression techniques such as motion compensation, discrete cosine transform (DCT), and quantization to achieve compression while maintaining perceptual quality.
+                MP3 Compression: MP3 is a popular lossy compression algorithm for audio data. It achieves compression by removing parts of the audio signal that are less audible to humans, such as frequencies outside the normal hearing range and quiet sounds masked by louder ones.
+                AAC (Advanced Audio Coding): AAC is a more advanced audio compression format compared to MP3. It offers better sound quality at lower bit rates and is commonly used for streaming audio and digital music distribution.
+                OGG Compression: OGG is a container format that typically uses lossy compression for audio data. It’s often associated with the Vorbis codec, which offers high-quality audio compression at lower bit rates compared to formats like MP3.
+                WebP Compression: WebP is an image format developed by Google that uses both lossy and lossless compression techniques. It’s designed to offer smaller file sizes and faster loading times for web images compared to formats like JPEG and PNG.
+                HEVC (High-Efficiency Video Coding): HEVC, also known as H.265, is a video compression standard that offers better compression efficiency compared to previous standards like H.264. It’s widely used for streaming video and digital television.
+                FLAC (Free Lossless Audio Codec): Although FLAC is primarily a lossless compression format, it can also be used in a lossy mode where certain non-essential audio data is discarded to achieve smaller file sizes while still retaining high audio quality.
+                WAVPACK: WAVPACK is a hybrid audio compression format that offers both lossy and lossless compression modes. It’s capable of achieving high compression ratios while preserving audio quality through its lossy mode.
+                DCT (Discrete Cosine Transform) Compression: DCT is commonly used in lossy compression algorithms for images and video, such as JPEG and MPEG. It transforms spatial data into frequency domain coefficients, allowing for efficient compression while sacrificing some image or video quality.
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________
 
+Telnet TCP 23
+- ABsolute TRaSh
+SSH TCP 22 
+    Asymmetric Encryption:
+        Key Exchange: When an SSH connection is initiated, the client and server perform a key exchange protocol (such as Diffie-Hellman key exchange).
+            This protocol allows them to securely establish a shared secret key over an insecure network. Asymmetric encryption algorithms (such as RSA or Elliptic Curve Cryptography) are used during this process.
+            Key Exchange Algorithms:
+                Diffie-Hellman (DH): A key exchange algorithm used to establish a shared secret key between the client and server during the initial connection setup.
+                Elliptic Curve Diffie-Hellman (ECDH): A variant of Diffie-Hellman that uses elliptic curve cryptography for key exchange, offering strong security with smaller key sizes compared to traditional DH.
+                Curve25519: A specific elliptic curve algorithm designed for efficient and secure key exchange.
+        Authentication: SSH also employs asymmetric encryption for user authentication. The client and server exchange public keys during the key exchange phase, and the client uses its private key to sign a challenge provided by the server.
+                        The server verifies the client’s identity by checking the signature against the client’s public key.
+            Public Key Algorithms:
+                RSA (Rivest-Shamir-Adleman): A widely used public key algorithm for digital signatures and encryption. SSH uses RSA for key authentication and digital signatures.
+                DSA (Digital Signature Algorithm): An older public key algorithm, less commonly used in SSH compared to RSA.
+                ECDSA (Elliptic Curve Digital Signature Algorithm): A variant of DSA that uses elliptic curve cryptography for digital signatures, offering strong security with smaller key sizes.
+    User Keys:
+        User keys are associated with individual users and are used for user authentication. They are typically generated by the client (user) and stored on the client-side.
+        User keys are asymmetric, consisting of a public key and a private key pair.
+        The user’s private key is kept securely on the client’s machine, while the public key is uploaded to the remote server.
+        Clents send their asymmetric public keys to the server to identify themselves to the server.
+    Host Keys:
+        Host keys, also known as server keys, are associated with SSH servers.
+        They serve as an identifier and ensure the integrity of the server during the initial connection.
+        Host keys are generated on the server-side and are used to verify the server’s identity and protect against man-in-the-middle attacks.
+        Servers send their asymmetric public keys to the client to identify themselves to the client.
+        These host keys are saved by the Linux client into the /home/<user>/.ssh/know_hosts file.
+   
+Symmetric Encryption:
+        Session Key:
+            Once the asymmetric public key exchange is completed, the client will derive the shared symmetric session key.
+            The client encrypt the session key using the public key (host key) of the server and send it to the server.
+            Once the server decrypts the session key using its private key they will use symmetric encryption for the remaining duration of the SSH session.
+            A symmetric encryption algorithm (such as AES) is commonly used to encrypt the session data.
+            The shared secret key is securely generated from the key exchange process and shared only between the client and server.
+            Symmetric Encryption Algorithms:
+                AES (Advanced Encryption Standard): A widely used symmetric encryption algorithm known for its security and efficiency. SSH supports various key lengths (e.g., AES-128, AES-192, AES-256) for AES encryption.
 
+Configuration File: Settings that exist on either the client or server that dictate functionality for ssh or sshd respectively
+    Client Configuration File (~/.ssh/config or /etc/ssh/ssh_config): The client-side SSH configuration file allows users to specify settings for SSH connections initiated from the local system.
+    Server Configuration File (/etc/ssh/sshd_config): The server-side SSH configuration file specifies settings and options for the SSH daemon (sshd) running on the remote server.
+    Known Hosts File (~/.ssh/known_hosts): The known hosts file stores the public keys of remote hosts that the SSH client has previously connected to.
 
-
+    -p {port} = This specifies the alternate port to be used. When connecting to a server the assumed default port to connect to is port 22. Should you need to specify a different port then the -p switch is used followed by the port.
+        Assuming the SSH port of 172.16.82.106 was 1234. ssh student@172.16.82.106 -p 1234
+        If you already had an SSH tunnel created you can call on that port to authenticate to the server on the other end. ssh student@localhost -p 1234
+    -l {username} = This is to specify the username to use when authenticating to the remote server. This is the same as {username]@{ip}. ssh 172.16.82.106 -l student
+    {command} = Optional command to execute on the remote host after establishing the SSH connection. If provided, SSH will execute the command on the remote host and then return the output to the local terminal. If not provided, SSH will start an interactive shell session on the remote host. ssh student@172.16.82.106 cat /etc/passwd
+    -X = This will enable X11 graphics to be forwarded from the server to the client. This will allow you to open graphical applications such as pcmanfm, gimp, eog, eom, firefox, terminator, and more. ssh student@172.16.82.106 -X
+    -v = Enables verbose mode, which provides detailed debugging information about the SSH connection process. This can be helpful for diagnosing connection issues or troubleshooting SSH configuration problems. ssh student@172.16.82.106 -v
+    -f = Requests SSH to go to the background just before command execution. This is useful when running SSH commands as part of scripts or automation tasks. This is not to be confused with the & option which is used to background most applications. ssh student@172.16.82.106 -f
+    -i {identity file} = Selects a file from which the identity (private key) for RSA or DSA authentication is read. The default is ~/.ssh/identity for protocol version 1, and ~/.ssh/id_rsa and ~/.ssh/id_dsa for protocol version 2. ssh student@172.16.82.106 -i idfile.pub
+    -F {config file} = Specifies an alternative per-user configuration file. If a configuration file is given on the command line, the system-wide configuration file (/etc/ssh/ssh_config) will be ignored. The default for the per-user configuration file is ~/.ssh/config. ssh student@172.16.82.106 -F my.config
+    -N = Requests that no command be executed on the remote server after establishing the SSH connection. This can be useful when setting up port forwarding or establishing a tunnel without running a command on the remote server. ssh student@172.16.82.106 -NT
+    -T = Disables pseudo-terminal allocation, preventing the allocation of a terminal on the remote server. This can be useful when executing commands that do not require interaction or terminal emulation. ssh student@172.16.82.106 -NT
+    -C = Enables compression of data during transmission over the SSH connection, reducing bandwidth usage, especially over slow or high-latency connections. ssh student@172.16.82.106 -C
+    -J user@host = Specifies a jump host to connect through when establishing the SSH connection. This simplifies the process of connecting to a remote host that is not directly accessible from the local machine. ssh -J student@10.10.0.40, student@172.16.1.15, student@172.16.40.10 student@172.16.82.106
+    -L [bind_address:]port:host:hostport = Sets up local port forwarding, allowing connections to a local port to be forwarded over the SSH tunnel to a specified host and port on the remote server. This can be useful for accessing services running on a remote server through a secure tunnel. ssh student@172.16.82.106 -L 1234:192.168.1.10:22
+    -R [bind_address:]port:host:hostport = Sets up remote port forwarding, allowing connections to a specified port on the remote server to be forwarded over the SSH tunnel to a host and port on the local machine or another remote server. This can be useful for exposing services running on the local machine to the remote server or other remote machines. ssh student@10.10.0.40 -L 1234:172.16.40.10:22
+    -D {port} = Specifies a local "dynamic" port forwarding port. This creates a SOCKS proxy on the specified port, allowing other applications to tunnel their traffic through the SSH connection securely. ssh student@172.16.1.15 -D 9050
 
 
 
