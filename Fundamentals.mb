@@ -1353,6 +1353,527 @@ LDAP:
                 operatingSystem: Operating system
                 ipaddress: IP address
 ______________________________________________________________________________________________________________________
+Day 3
+Traffic Capture
+NPcap(windows)
+libPcap(linux)
+
+Practical uses:
+    Network Troubleshooting
+    diagnosing improper routing or switching
+    identifying port/protocol misconfigurations
+    monitor networking consumption
+    intercepting users and passwords
+    Eavesdrop on network comms
+
+Disadvantages:
+    requires elevated permissions
+    can only capture what NIC can see
+    cannot capture local traffic
+    can consume massive amounts of system resources
+    lost packets on busy networks
+
+Two Ways Packets can be Captured
+    Hardware Packet Sniffers - In the past, the process of traffic sniffing was typically done by using hardware devices because the act of capturing packets was too intensive for computers.
+        It is a purpose-built device that is plugged into a network segment to collect and store network packets. Packets are forwarded to a separate system for further analysis.
+        With the improvement of computer CPUs, stand-alone hardware-based sniffers are rarely used anymore.
+    Software Packet Sniffers - remaining packet sniffers will fall into this category. The local system is used to collect the packets and the software then provides immediate analysis. Software-based sniffers rely on the network interface card (NIC) in the host system to pass traffic to the OS.
+        NICs are set into one of two modes:
+         Non-promiscuous: Default for most NICs. NIC will only process traffic destined for its host MAC address. Multicast MAC address groups and broadcast addresses are also received and processed.
+         Promiscuous: Requires root/kernel permissions to enable. The NIC receives and processes all traffic. Most operating systems can support promiscuous mode. Support can be limited by the NIC hardware and/or drivers.
+
+
+Socket Types
+    User Space Sockets
+        Stream Socket - TCP - Normally used with TCP, SCTP, and Bluetooth. 
+                                A stream socket provides a connection-oriented and sequenced flow of data which has methods for establishment and teardown of connections as well as error detection.
+        Datagram Socket - UDP -Normally used with UDP. A datagram socket is connection-less by nature. Sockets built this way can send and receive data,
+                                but there is no mechanism to retransmit data if a packet is dropped.
+    Kernal Space Sockets
+        RAW Sockets - A raw socket allows for the direct sending and receiving of IP packets without automatic protocol-specific transport layer formatting,
+                        meaning that all headers are typically included in the packet and not removed when moving up the network stack.
+
+Types of Sniffing   
+    Active sniffing – Traffic is not only captured but can be manipulated or altered in some way for a network attack.
+        Passive sniffing involves monitoring network traffic without actively injecting or modifying packets.
+        It typically uses network monitoring tools or packet capture software to capture packets as they traverse the network.
+        Passive sniffing is often used for network troubleshooting, security monitoring, and performance analysis.
+            Some examples of attacks that employ Active sniffing are:
+                MAC Flooding
+                DHCP Attacks
+                DNS Poisoning
+                Spoofing Attacks
+                ARP Poisoning
+    Passive sniffing – Traffic is captured and not modified. This is the most common method of packet sniffing.
+            Active sniffing involves actively injecting packets into the network to elicit responses from other devices.
+            Unlike passive sniffing, active sniffing requires the sniffer to send packets to specific destinations and analyze the responses. 
+            Active sniffing can be more intrusive and may raise security concerns, but it can also provide more detailed insights into network behavior.
+            Several applications that send data in clear text are vulnerable to this type of sniffing:
+                HTTP
+                SMTP
+                NNTP
+                FTP
+                POP
+                IMAP
+                TELNET
+                DNS
+
+Interface Naming
+    Traditional
+        eth0, eth1
+        ethX: Ethernet devices are typically named ethX, where X is a number. For example, eth0, eth1, etc.
+        wlanX: Wireless LAN devices are named wlanX, where X is a number.
+        pppX: Point-to-Point Protocol devices are named pppX, where X is a number.
+        tunX or tapX: TUN/TAP devices are named tunX or tapX, where X is a number.
+
+    Consistent
+        eno1, ens3
+        en = Ethernet
+        ib = InfiniBand
+        sl = Serial line IP (slip)
+        wl = Wireless local area network (WLAN)
+        ww = Wireless wide area network (WWAN)
+
+TCPDUMP 
+TCPDUMP breaks down its filters into three (3) different capture qualifiers:
+    type - specifies the 'ind of thing' that the id name or number refers to.
+        Possible types are:
+        host
+        net
+        port
+        portrange
+        Examples: `host 192.168.1.1', `net 192.168.1.0/24', `port 22', `portrange 1-1023'. If there is no type qualifier, host is assumed.
+    dir - specifies a particular transfer direction to and/or from id.
+        Possible directions are:
+        sr
+
+        dst
+        src or dst
+        src and dst
+        ra
+        ta
+        addr1, addr2, addr3, and addr4.
+        Examples: `src 192.168.1.1', `dst net 192.168.1.0/24', `src or dst port ftp-data'. If there is no dir qualifier, `src or dst' is assumed.
+                The ra, ta, addr1, addr2, addr3, and addr4 qualifiers are only valid for IEEE 802.11 Wireless LAN link layers.
+    proto - restricts the match to a particular protocol(s).
+        Possible protos are: ether, fddi, tr, wlan, ip, ip6, icmp, icmp6, arp, rarp, decnet, tcp and udp.
+        Examples:
+        `ether src 192.168.1.1'
+        `arp net 192.168.1.0/24'
+        `tcp port 22'
+        `udp portrange 1-1023'
+        `wlan addr2 0:2:3:4:5:6'
+
+-A  print payload in ASCII
+-D  List interfaces
+-i  specify capture interface
+-e  print data-link headers
+-X pr XX  print payload in HEX or ASCII
+-w  write to pcap (save)
+-r  reads from pcap (open)
+-v  gives more verbose output
+-n  no inverse lookups
+
+Logical Operators for TCPDUMP
+        Concatenation: 'and' (&&) - Returns true if both operands are true.
+        Alteration: 'or' (||) - Returns true if at least one operand is true.
+        Negation: 'not' (!) - Reverses the logical state of its operand (true becomes false, and vice versa).
+            <        less than
+            < =      less than or equal to
+            >        greater than
+            >=       greater than or equal to
+            = (==)   equal to
+            !=	     not equal to
+
+    Primitives(macros) 
+        CMU/Stanford Packet Filter (CSPF) Model commonly called Boolean Expression Tree
+        Simple and easy filter expressions
+        First user-level packet filter model
+        Memory-stack-based filter machine which can create bottlenecks on model CPUs
+        can have redundant computations of the same information
+    Berkley Packet Filters (BPF)
+        Control Flow Graph (CFG) Model
+        Uses a simple (non-shared) buffer model which can make it 1.5 to 20 times faster than CSPF
+        Can be more complex to create expressions but offer far more precision
+
+Berkley Packet Filter(BPF)
+BPF’s in conjunction with TCPDump, operators, and bitmasking make for an extremely powerful traffic filtering and parsing tool.
+    The smallest filter that BPF can understand easily is a byte.
+    A span of bytes can be denoted as in the BPF Bytecode example "ether[12:2]", starts at byte offset 12 and span 2 bytes in to look at the ethertype field.
+    Using BPFs with operators, bitmasking, and TCPDump creates a powerful tool for traffic filtering and parsing.
+    > tcpdump {A} [B:C] {D} {E} {F} {G}
+    A = Protocol ( ether | arp | ip | ip6 | icmp | tcp | udp )
+    B = Header Byte number
+    C = optional: Byte Length. Can be 1, 2 or 4 (default 1)
+    D = optional: Bitwise mask (&)
+    E = Relational operator ( = | == | > | < | <= | >= | != | () | << | >> )
+    F = Result of Expression
+    G = optional: Logical Operator (&& ||) to bridge expressions
+
+EXAMPLE:
+tcpdump 'ether[12:2] = 0x0800 && (tcp[2:2] != 22 && tcp[2:2] != 23)'
+This expression with look for any IPv4 traffic that is not SSH or Telnet.
+    First it will look at ether[12:2] which is typically the ethertype field. The expression tells the system to check if this field contains 0x0800.
+    Conjoins the first expression with the &&.
+    Using the () and || operators we can build two or more expressions to look for. In this case it checks the TCP destination field (tcp[2:2]) does not contain 22 or 23.
+
+Bitwise Masking
+    BPF can read 1(byes), 2 (half-word), 4(word)
+When using Berkeley Packet Filters, we have the ability to specify capture filters with greater precision by using bit-wise masking. This enables us to specify filters down to the bit-level. 
+    After we specify the byte(s) to be examined, we would then need to apply a mask to specify which bits are significant (1) and which bits are insignificant (0).
+    In this image we are applying a bitwise mask to byte [0] of the IP header. This byte contains both the Version and Internet Header Length (IHL) fields with each being 4-bits or 1 nibble.
+    We know that all ipv4 traffic will contain a value of 4 (0x4) in the high nibble to signify the version.
+The IHL field is normally 5 to signify that the IP header is 5 WORDS (32-bits) in length. We can apply a filter to focus on only the IHL field and print any packets that this field is greater than 5.
+    https://net.cybbh.io/public/networking/latest/06_traffic_cap/_images/ver-ihl-bpf.png
+ip[0] & 0x0F > 0x05
+
+ In this image we are applying a bitwise mask on the Fragmentation offset field in the IP header. This field consumes the lower 6-bits of byte [6] and the entirety of byte [7].
+    So to examine this field, we will need to read both bytes [6] and [7] but ignore the first 3-bits in byte [6].
+    https://net.cybbh.io/public/networking/latest/06_traffic_cap/_images/BPF_Mask2.png
+    ip[6:2] & 0x1fff > 0x0000
+
+TCP byte offset 13
+    -TCP flags 
+    - 0x11 ack/fin
+ tcpdump 'tcp[13] & 0x11 = 0x11' means that the flag is on in those positions
+
+TCP byte offset 12
+    -Offset and Reserved
+    tcpdump 'tcp[12] & 0xf0 > 0x50'
+        
+searching for ttl using ipv4
+    -tcpdump -i eth0 'ip[8] = 128'
+
+'tcp[0:2] = 3389'
+    -source
+
+'tcp[2:2] = 3389'
+    -destination
+___________________________________________________________________________________________________________
+___________________________________________________________________________________________________________
+                        WIRESHARK
+    Wireshark Display Filters vs Capture filters
+Display filters - allow you to change the view of what packets are displayed of those that are captured. Wireshark has specific display filters that it uses and 
+    it does not conform to TCPDUMP primitives or BPF format. 
+    If you start a Wireshark Packet capture without specifying any capture filters then Wireshark will capture all packets it can regardless if the information is useful or not. 
+    ON busy networks you can quickly accumulate packets and all are saved to disk.
+    It is entirely feasible to fill your entire hard drive very quickly causing your computer to freeze and crash if not carefully monitored.
+
+Capture filters - used to specify which packets should be saved to disk while capturing.
+    By default, there are no capture filters applied so all packets will be captured if nothing is specified. TCPDUMP primitives and/or BPFs can be applied and conjoined to make capture filters
+
+
+
+Wireshark display filters are a powerful feature that allows users to selectively view network traffic based on specific criteria. 
+These filters enable users to focus on particular packets of interest while disregarding others,making it easier to analyze network communication and identify relevant information.
+Here is a list of common and popular Wireshark Display filters.
+    Filtering for a particular protocol will give all packets that have the protocol header in the packet payload.
+        This will NOT show the TCP setup, TCP teardown, or fragmented packets that are part of the communication but do not have the protocol header in payload.
+        We can filter for specific protocols such as:
+            Layer 2: eth, arp, vlan, wlan
+            Layer 3: ip, ipv6, icmp, icmpv6
+            Layer 4: tcp, udp
+            Layer 5: smb, socks, rpc
+            Layer 7: telnet, ssh, http, ssl, tls, quic, dns, ftp, ftp-data, tftp, smtp, pop, imap, dhcp or bootp, ntp, tacplus, radius, rdp
+            Routing protocols: rip, ospf, bgp
+    We can filter for specific addresses:
+        Layer 2: eth.addr, eth.dst ==, eth.src ==
+        Layer 3: ip.addr ==, ip.dst ==, ip.src =
+        Layer 4: tcp.port ==, tcp.dstport ==, tcp.srcport ==, udp.port ==, udp.dstport ==, udp.srcport ==
+    IPv4 Filters
+        IHL: ip.hdr_len == 20, ip.hdr_len > 
+        DSCP: ip.dsfield.dscp > 0, ip.dsfield.dscp == 48
+        ECN: ip.dsfield.ecn > 0. ip.dsfield.ecn == 2
+        Flags: ip.flags.rb == 1, ip.flags.df == 1
+        Fragmentation: (ip.flags.mf == 1) || (ip.frag_offset > 0)
+        TTL: ip.ttl == 64, ip.ttl == 128, ip.ttl ⇐ 64 && ip.ttl > 30 && !(ip.ttl > 64)
+        Protocol: ip.proto == 1, ip.proto == 6, ip.proto == 17
+        6-in-4 or 6-to-4 encapsulation: ip.proto == 41
+    IPv6 Filters:
+        Traffic Class: ipv6.tclass > 0, ipv6.tclass == 0xe0
+        Next Header: ipv6.nxt == 6, ipv6.nxt == 17, ipv6.nxt == 58
+        4-in-6 encapsulation: ipv6.nxt == 4
+    TCP Specific Filters:
+        TCP Offset: tcp.hdr_len == 32, tcp.hdr_len > 20
+        TCP Flags:
+            Individual Flags: tcp.flags.syn == 1, tcp.flags.ack == 0, tcp.flags.urg == 1. tcp.flags.reset == 1
+            Flag Combinations: tcp.flags == 0x002, tcp.flags == 0x012, tcp.flags == 0x010, tcp.flags == 0x018
+        Urgent Pointer: tp.urgent_pointer > 0
+    HTTP specific filters:
+        http.request
+        http.request.method == <method>
+            <method> = GET, POST, HEAD, etc.
+        http.response
+        http.response.code == <code>
+            100, 200, 300, 400, etc.
+        http.user_agent, http.user_agent == "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.2) Gecko/20070219 Firefox/2.0.0.2", !(http.user_agent == "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.2) Gecko/20070219 Firefox/2.0.0.2")
+    DNS filters:
+        Query: A = dns.qry.type == 1, NS = dns.qry.type == 2, SOA = dns.qry.type == 6, AAAA = dns.qry.type == 28, AXFR = dns.qry.type == 252
+        Response: A = dns.resp.type == 1, NS = dns.resp.type == 2, SOA = dns.resp.type == 6, AAAA = dns.resp.type == 28, AXFR = dns.resp.type == 252
+    SSH Filters:
+        ssh.protocol, ssh.protocol == "SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.1"
+    ARP Filters:
+        ARP Request/Reply: arp.opcode == 1, arp.opcode == 2
+        RARP Request/Reply: arp.opcode == 3, arp.opcode == 4
+        Gratutious ARP: (arp.opcode == 2) && (eth.addr == ff:ff:ff:ff:ff:ff)
+    ICMP Filters:
+        Echo Request: icmp.type == 0
+        Echo Reply: icmp.type == 8
+        Time Exceeded: icmp.type == 1
+        Destination Unreachable and Port Unreachable: (icmp.type == 3) && (icmp.code == 3)
+    DHCP Filters:
+        Client to Server: (udp.srcport == 68) && (udp.dstport == 67)
+        Server to Client: (udp.srcport == 67) && (udp.dstport == 68)
+        Discover: dhcp.option.dhcp == 1
+        Offer: dhcp.option.dhcp == 
+        Request: dhcp.option.dhcp == 3
+        Ack: dhcp.option.dhcp == 5
+    FTP Filters:
+        Commands: ftp.request.command
+        Sending username or password: ftp.request.command == "USER", ftp.request.command == "PASS"
+        Download file: `ftp.request.command == "RETR"
+        Upload file: ftp.request.command == "STOR"
+        Switch to passive mode: ftp.request.command == "PASV"
+        Directory listing: ftp.request.command == "LIS
+    Wildcard string filters:
+        data contains "String" - generic filter used to match packets based on the presence of specific data within the packet payload.
+        ip contains "String" - specifically targets the IP (Internet Protocol) layer for payload.
+        http contains "String" - specifically targets the HTTP (Hypertext Transfer Protocol) payload.
+    Using the not feature:
+        Generally you can use any filter used above and surround it like this:
+        !(filter)
+    Conjoining filter expressions:
+        both conditions must be true: and or &&
+        either the first condition or the second condition is true: or or ||
+    Following Protocol Streams:
+        In Wireshark, you can follow protocol streams to examine the communication between hosts using various protocols, including TCP, UDP, and others.
+        Analyze → Follow →
+            TCP Stream (ctrl+alt+shift+T)
+            UDP Stream (ctrl+alt+shift+U)
+            TLS Stream (ctrl+alt+shift+S)
+            HTTP Stream (ctrl+alt+shift+H)
+    Apply as filter options:
+        In Wireshark, the "Apply as Filter" feature allows you to quickly create display filters based on specific packet attributes or values.
+T                his feature is useful for narrowing down the packets displayed in the packet list pane to focus on specific criteria of interest.
+            Identify Packet Attribute: Start by identifying the packet attribute or value you want to create a filter for.
+                    This could be any field or value present in the captured packets, such as source or destination IP addresses, port numbers, protocols, packet content, or any other packet attribute.
+            Select Packet: In the packet list pane of Wireshark, select the packet containing the attribute or value you want to create a filter for.
+                This could be any packet in the packet list that contains the desired attribute.
+            Right-Click Packet: Right-click on the selected packet to open the context menu.
+            Apply as Filter: From the context menu, hover over the "Apply as Filter" option. A submenu will appear displaying different filtering options based on various packet attributes,
+                such as IP addresses, protocols, and packet content.
+            Analyze → Apply as Filter →
+                Selected: This option applies a filter based on the attribute or value of the packet that you currently have selected in the packet list pane. Only packets matching filter is displayed.
+                Not Selected: This option applies a filter based on the attribute or value of packets that are not currently selected in the packet list pane. All other packets are displayed except those matching filter.
+                …​or Selected: This option combines the attribute or value of the packet that you currently have selected in the packet list pane with the attribute or value of other packets.
+                    Packets matching first filter or packets matching additional filters.
+                …​and Selected: This option combines the attribute or value of the packet that you currently have selected in the packet list pane with the attribute or value of other packets. 
+                Packets matching each filter.
+                .. or not Selected: This option applies a filter based on the attribute or value of packets that are not currently selected in the packet list pane, in combination with other attributes or values. Additional or conditional filters to exclude from view.
+                …​and not Selected: This option combines the attribute or value of packets that are not currently selected in the packet list pane with the attribute or value of other packets.
+                Packets matching each condition is excluded.
+
+Passive OS Fingerprinting (P0F)
+Passive OS Finger-printer (p0f) is a tool that allows the passive scanning of network traffic. It is a traffic/packet sniffer like TCPDUMP and Wireshark. 
+It makes use of the packet capture libraries like libpcap, winpcap, and NPCAP just as these other traffic sniffers to collect packets.
+The only thing that separates p0f from other collectors is how it uses and parses the captured data. Rather than capturing all packets, p0f only examines them and matches them to a signature database. 
+This database allows p0f to make a "best guess" on the sending Operating system (OS) and/or application.
+
+Passive OS fingerprinting (p0f) focuses on uniqueness in IP and TCP implementations to discover which OS sent the traffic.
+Specifically, p0f looks at header and payload items like initial TTL, fragmentation flag, default packet length of an IP header, Windows size, and TCP options in TCP SYN and SYN/ACK packets. 
+The makers of p0f studied this uniqueness and developed a signature database (/etc/p0f/p0f.fp).
+
+p0f -i eth0
+p0f -r wget.pcap
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
