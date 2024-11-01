@@ -1686,137 +1686,514 @@ The makers of p0f studied this uniqueness and developed a signature database (/e
 p0f -i eth0
 p0f -r wget.pcap
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________________________________________________________________________________________________
+Day 5 or somethin like that
+
+Network Reconnaissance
+Outcomes
+    Define Passive Network Information Gathering
+    Define Network Collection Devices and Relevant Data
+    Discuss Passive Network Analysis
+    Use Network Analysis Tools
+Reconnaissance Stages
+    Passive External
+    Active External
+    Passive Internal
+    Active Internal
+
+https://git.cybbh.space/net/public/raw/master/modules/networking/slides-v4/images/recon.png
+
+Reconnaissance Steps
+    Network Footprinting
+    Network Scanning
+    Network Enumeration
+    Vulnerability Assessment
+
+Network Footprinting
+    Collect information relating to target
+        Network
+        Systems
+        Organization
+
+Network Scanning
+    Port Scanning
+    Network Scanning
+    Vulnerability Scanning
+
+Network Enumeration
+    Network Resource and shares
+    Users and Groups
+    Routing tables
+    Auditing and Service settings
+    Machine names
+    Applications and banners
+    SNMP and DNS details
+    Other common services and ports
+
+Vulnerability Assessment
+    Injection
+    Broken Authentication
+    Sensitive Data Exposure
+    XML External Entities
+    Broken Access Control
+    Security Misconfiguration
+    Software/Components with Known Vulnerabilities
+
+Describe Methods Used for Passive External Discovery
+https://git.cybbh.space/net/public/raw/master/modules/networking/slides-v4/images/recon1.png
+
+Passive Recon Activities
+    Open-Source Intelligence (OSINT)
+    Publicly Available Information (PAI)
+Passive Recon Activities
+    IP Addresses and Sub-domains
+    Identifying External/3rd Party site
+    Identifying People
+    Identifying Technologies
+    Identifying Content of Interes
+    Identifying Vulnerabilities
+IP Addresses and Sub-domains
+    IP Registries:
+        IANA IPv4
+        IANA IPv6
+IP Addresses and Sub-domains
+    DNS Lookups:
+        arin.net
+        whois.domaintools.com
+        viewdns.info
+        dnsdumpster.com
+        centralops.net
+IP Addresses and Sub-domains
+    URL Scan:
+        sitereport.netcraft.com
+        web-check.xyz
+        web-check.as93.net
+        urlscan.io
+IP Addresses and Sub-domains
+    IP GeoLocation lookup:
+        maxmind.com
+        iplocation.io
+        iplocation.net
+        infosniper.net
+IP Addresses and Sub-domains
+    BGP prefixes:
+        bgpview.io
+        hackertarget.com
+        bgp.he.net
+        bgp4.as
+Identifying External/3rd Party sites
+    Parent/Subordinate organizations
+    Clients/Customers
+    Service organizations
+    Partners
+Identifying People
+    Target website
+    Crawler tools like Maltego or Creepy
+    Search engines
+    Social Media
+    Job Portals
+    Tracking active emails
+    Family Tree
+Identifying People
+    Target website
+    Crawler tools like Maltego or Creepy
+    Search engines
+    Social Media
+    Job Portals
+    Tracking active emails
+    Family Tree
+Identifying Technologies
+    File extensions
+    Server responses
+    Job listing
+    Website content
+    Google Hacking
+    Shodan.io
+    MAC OUI Lookup
+Identifying Content of Interest
+    /etc/passwd and /etc/shadow or SAM database
+    Configuration files
+    Log files
+    Backup files
+    Test pages
+    Client-side code
+Identifying Vulnerabilities
+    Known Technologies
+    Error messages responses
+    Identify running services
+    Identify running OS
+    Monitor running Applications
+Dig vs Whois
+    Whois - queries DNS registrar over TCP port 43
+        Information about the owner who registered the domain
+    Dig - queries DNS server over UDP port 53
+        Name to IP records
+
+ZONE TRANSFER
+    Between Primary and Secondary DNS over TCP port 53
+    https://digi.ninja/projects/zonetransferme.php
+dig axfr {@soa.server} {target-site}
+dig axfr @nsztm1.digi.ninja zonetransfer.me
+
+Google Searches
+    Advanced searches.
+    List of filters
+    Dork Search
+site:*.ccboe.net
+site:*.ccboe.net "administrator"
+
+Passive OS Fingerprinter (p0f)
+    p0f: Passive scanning of network traffic and packet captures.
+more /etc/p0f/p0f.fp
+sudo p0f -i eth0            <-- listen activley
+sudo p0f -r test.pcap
+    Examine packets sent to/from target
+    Can guess Operating Systems and version
+    Can guess client/server application and version
+
+    Social Engineering (Hack a person)
+    Technical based (Email/SMS/Bluetooth)
+    Other Types (Dumpster Diving/Shoulder Surf)
+
+Scanning Strategy
+    Remote to Local
+    Local to Remote
+    Local to Local
+    Remote to Remote
+Scanning Approach
+    Aim
+        Wide range target scan
+        Target specific scan
+    Method
+        Single source scan
+            1-to-1 or 1-to-many
+        Distributed scan
+            many-to-one or many-to-many
+
+Vertical Scan
+    Scan some (or all ports) on a single target
+verticalscan
+Describe Methods Used for Passive Internal Discovery
+recon3
+Packet Sniffers
+    Wireshark
+    Tcpdump
+    p0f
+Limited to traffic in same local area of the network
+Describe Methods Used for Active Internal Discovery
+recon4
+
+Horizontal Scan
+    Scan a single (or set) port(s) on a range of targets.
+
+Strobe Scan
+    Scan a predefined subset of ports on a range of targets.
+
+Block Scan
+    Scan all (or a range) ports on a range of targets.
+
+    Social Engineering (Hack a person)
+
+    Technical based (Email/SMS/Bluetooth)
+
+    Other Types (Dumpster Diving/Shoulder Surf)
+
+Distributed Scan - Block
+distributedscan1
+Distributed Scan - Strobe
+distributedscan2
+Ping
+
+    Ping one IP:
+    ping 172.16.82.106 -c 1
+    Ping a range:
+    for i in {1..254}; do (ping -c 1 172.16.82.$i | grep "bytes from" &) ; done
+__________________________________________________________________________________
+NMAP Defaults
+    Default Scan:
+        User: TCP Full Connect Scan (-sT)
+        Root: TCP SYN Scan (-sS)
+    Default Ports scanned: 1000 most commonly used TCP or UDP ports
+NMAP Port States
+    open
+    closed
+    filtered
+    unfiltered
+    open|filtered
+    closed|filtered
+NMAP Scan Types
+    Broadcast Ping/Ping sweep (-sP, -PE)
+    SYN scan (-sS)
+    Full connect scan (-sT)
+    Null scan (-sN)
+    FIN scan (-sF)
+    XMAS tree scan (-sX)
+    UDP scan (-sU)
+    Idle scan (-sI)
+NMAP Scan Types
+    Decoy scan (-D)
+    ACK/Window scan (-sA)
+    RPC scan (-sR)
+    FTP scan (-b)
+    OS fingerprinting scan (-O)
+    Version scan (-sV)
+    Discovery probes
+NMAP - Other options
+    -PE - ICMP Ping
+    -Pn - No Ping
+NMAP - Time-Out
+    -T0 - Paranoid - 300 Sec
+    -T1 - Sneaky - 15 Sec
+    -T2 - Polite - 1 Sec
+    -T3 - Normal - 1 Sec
+    -T4 - Aggresive - 500 ms
+    -T5 - Insane - 250 ms
+NMAP - Delay
+    --scan-delay <time> - Minimum delay between probes
+    --max-scan-delay <time> - Max delay between probes
+NMAP - Rate Limit
+    --min-rate <number> - Minimum packets per second
+    --max-rate <number> - Max packets per second
+____________________________________________________________________________
+____________________________________________________________________________
+Traceroute - Firewalking
+traceroute 172.16.82.106
+traceroute 172.16.82.106 -p 123
+sudo traceroute 172.16.82.106 -I
+sudo traceroute 172.16.82.106 -T
+sudo traceroute 172.16.82.106 -T -p 443
+____________________________________________________________________________
+____________________________________________________________________________
+Netcat - Scanning
+nc [Options] [Target IP] [Target Port(s)]
+    -z : Port scanning mode i.e. zero I/O mode
+    -v : Be verbose [use twice -vv to be more verbose]
+    -n : do not resolve ip addresses
+    -w1 : Set time out value to 1
+    -u : To switch to UDP 
+
+NETCAT HORIZONTAL SCANNING
+    Range of IPs for specific ports
+    TCP
+for i in {1..254}; do nc -nvzw1 172.16.82.$i 20-23 80 2>&1 & done | grep -E 'succ|open'
+    UDP
+Netcat - Vertical Scanning
+    Range of ports on specific IP
+    TCP
+nc -nzvw1 172.16.82.106 21-23 80 2>&1 | grep -E 'succ|open'
+    UDP
+nc -nuzvw1 172.16.82.106 1000-2000 2>&1 | grep -E 'succ|open'
+NETCAT TCP SCAN SCRIPT
+#!/bin/bash
+echo "Enter network address (e.g. 192.168.0): "
+read net
+echo "Enter starting host range (e.g. 1): "
+read start
+echo "Enter ending host range (e.g. 254): "
+read end
+echo "Enter ports space-delimited (e.g. 21-23 80): "
+read ports
+for ((i=$start; $i<=$end; i++))
+do
+    nc -nvzw1 $net.$i $ports 2>&1 | grep -E 'succ|open'
+done
+
+Vulnerability Assessment
+
+    Injection
+
+    Broken Authentication
+
+    Sensitive Data Exposure
+
+    XML External Entities
+
+    Broken Access Control
+
+    Security Misconfiguration
+
+    Software/Components with Known Vulnerabilities
+
+Passive OS Fingerprinter (p0f)
+
+    Examine packets sent to/from target
+
+    Can guess Operating Systems and version
+
+    Can guess client/server application and version
+
+Social Tactics
+
+    Social Engineering (Hack a person)
+
+    Technical based (Email/SMS/Bluetooth)
+
+    Other Types (Dumpster Diving/Shoulder Surf)
+
+Netcat - TCP Scan Script
+
+#!/bin/bash
+echo "Enter network address (e.g. 192.168.0): "
+read net
+echo "Enter starting host range (e.g. 1): "
+read start
+echo "Enter ending host range (e.g. 254): "
+read end
+echo "Enter ports space-delimited (e.g. 21-23 80): "
+read ports
+for ((i=$start; $i<=$end; i++))
+do
+    nc -nvzw1 $net.$i $ports 2>&1 | grep -E 'succ|open'
+done
+
+Netcat - UDP Scan Script
+
+#!/bin/bash
+echo "Enter network address (e.g. 192.168.0): "
+read net
+echo "Enter starting host range (e.g. 1): "
+read start
+echo "Enter ending host range (e.g. 254): "
+read end
+echo "Enter ports space-delimited (e.g. 21-23 80): "
+read ports
+for ((i=$start; $i<=$end; i++))
+do
+    nc -nuvzw1 $net.$i $ports 2>&1 | grep -E 'succ|open'
+done
+
+Netcat - Banner Grabbing
+    Find what is running on a particular port
+nc [Target IP] [Target Port]
+nc 172.16.82.106 22
+nc -u 172.16.82.106 53
+    -u : To switch to UDP
+
+
+Curl and Wget
+    Both can be used to interact with the HTTP, HTTPS and FTP protocols.
+    Curl - Displays ASCII
+curl http://172.16.82.106
+curl ftp://172.16.82.106
+    Wget - Downloads (-r recursive)
+wget -r http://172.16.82.106
+wget -r ftp://172.16.82.106
+
+ftp 172.16.82.106 if you have credentials
+^^student:password
+
+Windows: ipconfig /all
+Linux: ip address (ifconfig depreciated)
+VyOS: show interface
+DNS configuration
+indows: ipconfig /displaydns
+Linux: cat /etc/resolv.conf
+
+ARP Cache
+Windows: arp -a
+Linux: ip neighbor (arp -a depreciated)
+
+Network connections
+Windows: netstat
+Linux: ss (netstat depreciated)
+Example options useful for both netstat and ss: -antp
+a = Displays all active connections and ports.
+n = No determination of protocol names. Shows 22 not SSH.
+t = Display only TCP connections.
+u = Display only UDP connections.
+p = Shows which processes are using which sockets.
+l = listening ports
+
+Services File
+Windows: %SystemRoot%\system32\drivers\etc\services
+Linux/Unix: /etc/services
+
+OS Information
+Windows: systeminfo
+Linux: uname -a and /etc/os-release
+Running Processes
+
+Windows: tasklist
+Linux: ps or top
+Example options useful for ps: -elf
+e = Show all running processes
+l = Show long format view
+f = Show full format listing
+
+Command path
+which          <-- location of file 
+whereis       <-- shows if it is installed
+
+Routing Table
+Windows: route print
+Linux: ip route (netstat -r deprecated)
+VyOS: show ip route
+
+File search
+find / -name hint* 2> /dev/null
+find / -iname flag* 2> /dev/null
+
+SSH Config
+Windows: C:\Windows\System32\OpenSSH\sshd_config
+Linux: /etc/ssh/sshd_config
+
+=============================================================================================
+
+Describe Methods Used for Active Internal Discovery
+recon4
+Active Internal Network Reconnaissance
+    Will use similar tools as Active External Network Reconnaissance
+    Scope and addresses may differ
+Network Mapping Tools
+    Draw.io Local (Template)
+    Draw.io Web
+    Witeboard.com
+    Draw.Chat
+    SmartDraw
+    Ziteboard
+    Tutorialspoint Whiteboard
+    Explain Everything Whiteboard
+
+ARP SCANNING
+arp-scan --interface=eth0 --localnet
+nmap -sP -PR 172.16.82.96/27
+
+PING SCANNING
+ping -c 1 172.16.82.106
+for i in {1..254}; do (ping -c 1 172.16.82.$i | grep "bytes from" &) ; done
+sudo nmap -sP 172.16.82.96/27
+
+***DEV TCP IS APART OF THE BASH SHELL***
+DEV TCP BANNER GRAB
+exec 3<>/dev/tcp/172.16.82.106/22; echo -e "" >&3; cat <&3
+
+DEV TCP SCANNING
+for p in {1..1023}; do(echo >/dev/tcp/172.16.82.106/$p) >/dev/null 2>&1 && echo "$p open"; done
+
+
+
+
+
+Network Forensics - Mapping
+    Device type (Router/host)
+    System Host-names
+    Interface names (eth0, eth1, etc)
+    IP address and CIDRs for all interfaces
+    TCP and UDP ports
+    MAC Address
+    OS type/version
+    Known credentials
+
+Draw.io Web <-- mapping tool
+
+
+
+
+
+
+netX_studentX:password
+vyos:password
 
 
 
