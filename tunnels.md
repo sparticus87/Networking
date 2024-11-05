@@ -196,8 +196,20 @@ scp **<RHP1>** **<user>@<IP>**:secrets/notsecret Recon/
 
 
 
-
-
+7. B
+8. D
+9. C
+10. B
+11. D
+12. A
+13. B
+14. A
+15. C
+16. A
+17. D
+18. B
+19. C
+20. 
 
 
 
