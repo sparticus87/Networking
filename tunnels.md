@@ -173,15 +173,23 @@ IH> ssh user@127.0.0.1 -p52201 -D 9050 -NT
  **update map**
  IH> proxychains wget -r ftp://127.0.0.1 or ftp 127.0.0.1
  -
+--**______________________________________________________________**--
 
+Local Forwarding
+<host>~$**<user>@<IP>** -L <Bind_Port>:**<Tgt_IP>:<Tgt_Port>** -NT
 
+Remote Forwarding
+<host>~$**<user>@<IP>** -R **<Bind_Port>**:<Tgt_IP>:<Tgt_Port> -NT
 
+Proxychains
+<host>~$**<user>@<IP>** -D 9050 -NT
+                    **-p<port> "specify RHP"**
+                    
+**System your authenticating to** = "**"
 
-
-
-
-
-
+"scp using port forwards"
+scp **<RHP1>** **<user>@<IP>**:secrets/notsecret Recon/
+                                ^^what u want       ^^where u want it
 
 
 
