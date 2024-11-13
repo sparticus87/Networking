@@ -1,0 +1,313 @@
+Typical locations for filtering devices
+    IPS
+    Firewalls
+    Routers
+    Switches
+    IPS
+
+Interpret Cisco access control list (ACL)
+ACL Type 	Range/Identifier 	Filters on
+IP Numbered Standard
+1-99
+1300-1999 (expanded range)
+* Source Address
+IP Numbered Extended
+100-199
+2000-2699 (expanded range)
+* Source Address
+* Destination Address
+* protocol type (IP, UDP, etc.)
+* Protocol type (TCP, ICMP, iPv6, IP, etc.)
+Optional:
+* Protocol or port (DNS, SMTP, NTP, SMB, 22, 67, etc.)
+* Other optional fields including:
+--- connection status
+--- fragmentation state
+
+200-299 Ethernet Type Code
+{mostly obsolete but range still reserved}
+300-399 DECnet
+{mostly obsolete but range still reserved}
+400-499 XNS
+{mostly obsolete but range still reserved}
+500-599 Extended XNS
+{mostly obsolete but range still reserved}
+600-699Appletalk
+{mostly obsolete but range still reserved}
+700-799 Ethernet MAC
+{mostly obsolete but range still reserved}
+800-899 IPX Standard
+{mostly obsolete but range still reserved}
+900-999 IPX Extended
+{mostly obsolete but range still reserved}
+1000-1999 IPX SAP
+{mostly obsolete but range still reserved}
+1100-1199 MAC Extended
+{mostly obsolete but range still reserved}
+1200-1299 IPX Summary
+{mostly obsolete but range still reserved}
+
+
+
+    Zone-Based Policy Firewall (Zone-Policy Firewall, ZBF or ZFW)
+        Is a method of configuration for application layer firewalls based on zones instead of interfaces. Interfaces are assigned to zones, and inspection policy is applied to traffic moving between the zones. 
+        Inter-zone policies offer flexibility and granularity, so different inspection policies can be applied to multiple host groups connected to the same router interface. Each interface set up in a zone is denied access to'
+        any other interface by default, isolating sensitive subnetworks from the rest of the network and Internet.
+
+    Host Based Firewalls - These perform similar function as Network firewalls but work in a software installed on a host machine. Protects only that host and is not as efficient to block traffic compared to Network based firewall.
+        Host based Firewalls include but not limited to:
+            netfilter - iptables/nftables
+            windows defender
+            Symantec or McAfee host based applications
+
+
+
+    Network Based Firewalls - These are mostly proprietary appliances with the primary intent to filter network traffic. Firewalls use rules as the mechanism to filter traffic.
+        Network based Firewalls include but not limited to:
+            Cisco ASA
+            Palo Alto
+            Dell Sonic Wall            Juniper
+
+ First we need to determine our network segments.
+    Public (Internet) - Boundry connected to/from the Internet.
+        What address do we allow in or out?
+        What protocols are allowed in and out?
+    Semi-private (Extranet) - Networks that we allow access to trusted third-party partners.
+        Allow traffic to/from for specific protocols.
+    Private (Intranet) - Networks that only allow access to internal users.
+        What traffic is allowed in/out?
+        Will it be using NAT?
+        What traffic is allowed to/from the internet/DMZ?
+    Demilitarized Zone (DMZ) - Network that should allow internet and intranet users.
+        Filter traffic from internet/intranet to/from servers by exception to/from service ports.
+    Virtual Private Network (VPN) - Boundry where internal users can access the intranet from anywhere using the internet.
+        Will there be VPN usage? If so how can we allow this traffic in/out to authorized endpoints?
+    Network Address Translation (NAT) - Determine the private/public address boundary.
+        Is nat used?
+        Where are the boundries at?
+        Within boundries firewall rules use internal addresses.
+        Outside boundries firewall rules use the public address.
+
+/etc/snort/snort.conf
+/etc/snort/rules
+/etc/snort/rules
+/var/log/snort
+
+Common Snort command line switches
+    -D - Runs snort in Daemon mode
+    -l log-dir - to specify the location where Snort should create its logs. If not specified then the default is /var/log/snort
+    -c config-file - to specify a configuration or rule file that Snort should use for packet matching.
+    -r pcap-file - to specify a pcap file for Snort to read.
+    -p - Turn off promiscuous mode sniffing.
+    -e - Display/log the link-layer packet headers.
+    -i interface - Specify the interface for the Snort Daemon to sniff on.
+    -V - Show the version number and exit.
+
+To run snort as a Daemon
+    sudo snort -D -c /etc/snort/snort.conf -l /var/log/snort
+To run snort against a PCAP
+    sudo snort -c /etc/snort/rules/file.rules -r file.pcap
+
+Snort IDS/IPS rule - header
+Snort rules consist of a header which sets the conditions for the rule to work and rule options (a rule body) which provides the actual rule (matching criteria and action).
+[action] [protocol] [source ip] [source port] [direction] [destination ip] [destination port] ( match conditions ;)
+A Snort header is composed of:
+    Action - such as alert, log, pass, drop, reject
+        alert - generate alert and log packet
+        log - log packet onl
+        pass - ignore the packet
+        drop - block and log packet
+        reject - block and log packet and send TCP message (for TCP traffic) or ICMP message (for UDP traffic)
+        sdrop - silent drop - block packet only (no logging)
+    Protocol
+        tcp
+        udp
+        icmp
+        ip
+    Source IP address
+        a specific address (i.e. 192.168.1.1 )
+        a CIDR notation (i.e. 192.168.1.0/24 )
+        a range of addresses (i.e. [192.168.1.1-192.168.1.10] )
+        multiple addresses (i.e. [192.138.1.1,192.168.1.10] )
+        variable addresses (i.e. $EXTERNALNET ) (must be defined to be used)
+        "any" IP address
+    Source Port
+        one port (i.e. 22 )
+        multiple ports (i.e. [22,23,80] )
+        a range of ports (i.e. 1:1024 = 1 to 1024, :1024 = less than or equal to 1024, 1024: = greater than or equal to 1024)
+        variable ports (i.e. $EXTERNALPORTS) (must be defined to be used)
+        any - When icmp protocol is used then "any" must still be used as a place holder.
+    Direction
+        source to destination ( - > )
+        either direction ( <> )
+    Destination IP address
+        a specific address (i.e. 192.168.1.1 )
+        a CIDR notation (i.e. 192.168.1.0/24 )
+        a range of addresses (i.e. [192.168.1.1-192.168.1.10] )
+        multiple addresses (i.e. [192.138.1.1,192.168.1.10] )
+        variable addresses (i.e. $EXTERNALNET ) (must be defined to be used)
+        "any" IP address
+    Destination port
+        one port (i.e. 22 )
+        multiple ports (i.e. [22,23,80] )
+        a range of ports (i.e. 1:1024 = 1 to 1024, :1024 = less than or equal to 1024, 1024: = greater than or equal to 1024)
+        variable ports (i.e. $INTERNALPORTS) (must be defined to be used)
+        any - When icmp protocol is used then "any" must still be used as a place holder.
+
+Snort IDS/IPS Payload detection options:
+* content:"text" - looks for a string of text.
+* content:"|binary data|" - to look for a string of binary HEX
+* nocase - modified content, makes it case insensitive
+* depth: - specify how many bytes into a packet Snort should search for the
+           specified pattern
+* offset: - skips a certain number of bytes before searching (i.e. offset: 12)
+* distance: - how far into a packet Snort should ignore before starting to
+              search for the specified pattern relative to the end of the
+              previous pattern match
+* within: - modifier that makes sure that at most N bytes are between pattern
+            matches using the content keyword
+
+Snort IDS/IPS Non-Payload detection options:
+
+* flow: - direction (to/from client and server) and state of connection
+         (established, stateless, stream/no stream)
+* ttl: - The ttl keyword is used to check the IP time-to-live value.
+* tos: - The tos keyword is used to check the IP TOS field for a specific value.
+* ipopts: - The ipopts keyword is used to check if a specific IP option is present
+* fragbits: - Check for R|D|M ip flags.
+* dsize: - Test the packet payload size
+* seq: - Check for a specific TCP sequence number
+* ack: - Check for a specific TCP acknowledge number.
+* flags: - Check for E|C|U|A|P|R|S|F|0 TCP flags.
+* itype: - The itype keyword is used to check for a specific ICMP type value.
+* icode: - The icode keyword is used to check for a specific ICMP code val
+
+
+
+access-list 101 deny udp host 19.3.0.29 10.5.0.0 0.0.0.255 eq 69
+access-list 101 deny tcp any 10.3.0.0 0.0.0.255 eq 22
+access-list 101 deny tcp any 10.1.0.0 0.0.0.255 eq 23
+access-list 101 deny icmp any 10.5.0.0 0.0.0.255 echo
+access-list 101 deny icmp any 10.5.0.0 0.0.0.255 echo-reply
+
+    What Type of list is this?
+
+    What would it do?
+
+    Where should it be placed (use diagram on previous slide)?
+
+    What direction?
+
+Snort IDS/IPS Payload detection options:
+
+* content:"text" - looks for a string of text.
+* content:"|binary data|" - to look for a string of binary HEX
+* nocase - modified content, makes it case insensitive
+* depth: - specify how many bytes into a packet Snort should search for the
+           specified pattern
+* offset: - skips a certain number of bytes before searching (i.e. offset: 12)
+* distance: - how far into a packet Snort should ignore before starting to
+              search for the specified pattern relative to the end of the
+              previous pattern match
+* within: - modifier that makes sure that at most N bytes are between pattern
+            matches using the content keyword
+
+Snort IDS/IPS Non-Payload detection options:
+* flow: - direction (to/from client and server) and state of connection
+         (established, stateless, stream/no stream)
+* ttl: - The ttl keyword is used to check the IP time-to-live value.
+* tos: - The tos keyword is used to check the IP TOS field for a specific value.
+* ipopts: - The ipopts keyword is used to check if a specific IP option is present
+* fragbits: - Check for R|D|M ip flags.
+* dsize: - Test the packet payload size
+* seq: - Check for a specific TCP sequence number
+* ack: - Check for a specific TCP acknowledge number.
+* flags: - Check for E|C|U|A|P|R|S|F|0 TCP flags.
+* itype: - The itype keyword is used to check for a specific ICMP type value.
+* icode: - The icode keyword is used to check for a specific ICMP code value.
+
+Snort IDS/IPS Post detection options:
+* logto: - The logto keyword tells Snort to log all packets that trigger this rule to
+           a special output log file.
+* session: - The session keyword is built to extract user data from TCP Sessions.
+* react: - This keyword implements an ability for users to react to traffic that
+           matches a Snort rule by closing connection and sending a notice.
+* tag: - The tag keyword allow rules to log more than just the single packet that
+         triggered the rule.
+* detection_filter - defines a rate which must be exceeded by a source or destination
+                     host before a rule can generate an event.
+
+Snort IDS/IPS Thresholding and suppression options:
+threshold: type [limit | threshold | both], track [by_src | by_dst],
+count [#], seconds [seconds]
+* limit - alerts on the 1st event during defined period then ignores the rest.
+* threshold - alerts every [x] times during defined period.
+* both - alerts once per time internal after seeing [x] amount of occurrences
+         of event. It then ignores all other events during period.
+* track - rate is tracked either by source IP address, or destination IP address
+* count - number of rule matching in [s] seconds that will cause event_filter
+          limit to be exceeded
+* seconds - time period over which count is accrued. [s] must be nonzero value
+
+Snort rule example
+    Look for anonymous ftp traffic:
+    alert tcp any any -> any 21 (msg:"Anonymous FTP Login"; content: "anonymous";
+    sid:2121; )
+    This will cause the pattern matcher to start looking at byte 6 in the payload)
+    alert tcp any any -> any 21 (msg:"Anonymous FTP Login"; content: "anonymous";
+    offset:5; sid:2121; )
+Snort rule example
+    This will search the first 14 bytes of the packet looking for the word “anonymous”.
+    alert tcp any any -> any 21 (msg:Anonymous FTP Login"; content: "anonymous";
+    depth:14; sid:2121; )
+    Deactivates the case sensitivity of a text search.
+    alert tcp any any -> any 21 (msg:"Anonymous FTP Login"; content: "anonymous";
+    nocase; sid:2121; )
+Snort rule example
+    ICMP ping sweep
+    alert icmp any any -> 10.10.0.40 any (msg: "NMAP ping sweep Scan";
+    dsize:0; itype:8; icode:0; sid:10000004; rev: 1; )
+    Look for a specific set of Hex bits (NoOP sled)
+    alert tcp any any -> any any (msg:"NoOp sled"; content: "|9090 9090 9090|";
+    sid:9090; rev: 1; )
+Snort rule example
+    Telnet brute force login attempt
+    alert tcp any 23 -> any any (msg:"TELNET login incorrect";
+    content:"Login incorrect"; nocase; flow:established, from_server;
+    threshold: type both, track by_src, count 3, seconds 30;
+    classtype: bad-unknown; sid:2323; rev:6; )
+
+---------------------------------------------------------
+Interpret the effects of IDS/IPS rules on network traffic
+IDS/IPS Performance
+    True Positive (TP)
+    True Negative (TN)
+    False Positive (FP)
+    False Negative (FN)
+Failed IDS/IPS
+    Fail open
+    Fail close
+Technical Attacks on IDS/IPS
+    packet sequence manipulation
+    fragmenting payload
+    overlapping fragments with different reassembly by devices
+    Manipulating TCP headers
+    Manipulating IP options
+    Sending data during the TCP connection setup
+Non-Technical attacks against IDS/IPS
+    attacking during periods of low manning
+    Example - Ramadan 2012 Saudi Aramco attack
+    attacking during a surge in activity
+    Example - Target Corp. Point of Sale machines during the Thanksgiving-Christmas 2013 shopping season
+Strengthening Defensive Systems
+    Linking IDS/IPS to other tools
+    Multiconfig
+    Tuning
+    HIDS and File Integrity
+------------------------------------------------------
+
+
+
+
+
+
