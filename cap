@@ -1,0 +1,54 @@
+APIPA uses the IP network range of 169.254.0.0/16. What RFC number governs this? Enter only the BASE64 conversion of the number
+--MzkyNwo=
+IPv6 Uses SLAAC to resolve its Global address from the Router. What multicast destination address does it use to Solicit the router? 
+--RkYwMjo6Mgo=
+Which type of ARP is sent in order to perform a MitM attack?
+--QVJQIFJFUExZCg==
+An attacker built a FRAME that looks like this:<| Destination MAC | Source MAC | 0x8100 | 1 | 0x8100 | 100 | 0x0800 | IPv4 Header | TCP Header | Data | FCS |
+What form of attack is being performed?
+--VkxBTiBIT1BQSU5HCg==
+A router receives a 5000 byte packet on eth0. The MTU for the outbound interface (eth1) is 1500. What would the fragmentation offset increment be with the conditions below
+Origional packet Size = 5000 bytes MTU for outboud interface = 1500
+--MTg0Cg==
+
+Using BPF’s, determine how many packets with a DSCP of 26 being sent to the host 10.0.0.103.
+--MTA4Cg==
+What is the total number of fragmented packets?
+
+How many packets have the DF flag set and has ONLY the RST and FIN TCP Flags set?
+--MTA5Cg==
+An attacker is targeting the host 10.0.0.104 with either a TCP full or half open scan. Based off the pcap, how many ports are open?
+--MTgK
+RAW Sockets are created in ________ space. Specify the one word BASE64 conversion of your answer in ALL CAPS
+--S0VSTkVMCg==
+Which module would you need to import to convert data into a corresponding 2-digit hex representation? Specify the module in lowercase and converted to BASE64.
+
+What is the proper format to pro-grammatically pack the IPv4 RAW header?Specify the answer in the proper case. Include only what is between the single or double quotes and not the quotes themselves or the "!".<
+
+What is the default (and most common) encoding used when converting data to be sent over the network. Provide your answer in ALL CAPS and converted to BASE64.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
